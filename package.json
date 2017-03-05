@@ -1,0 +1,15 @@
+{
+  "name": "chindow.io",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Dylan Harness <dharness.student@gmail.com> (dharness.github.io)",
+  "license": "ISC",
+  "dependencies": {
+    "express": "4.14.1"
+  }
+}
