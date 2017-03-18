@@ -1,0 +1,36 @@
+.sc-chat-window {
+  width: 400px;
+  height: 100%;
+  position: fixed;
+  right: 0px;
+  bottom: 0px;
+  box-sizing: border-box;
+  border: solid 1px black;
+  background: white;
+  display: flex;
+  flex-direction: column;
+}
+
+.sc-message-list {
+  height: 80%;
+  overflow-y: scroll;
+}
+
+.sc-input-field {
+  height: 20%;
+  margin: 0px;
+}
+
+.sc-input-field--input {
+  height: 100%;
+  width: 100%;
+}
+
+.sc-message--me {
+  color: red;
+  text-align: right;
+}
+.sc-message--them {
+  color: blue;
+  text-align: left;
+}
