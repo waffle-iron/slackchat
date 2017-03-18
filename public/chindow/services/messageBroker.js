@@ -11,23 +11,31 @@ const messageBroker = {
     this.messageRecievedHandlers = [];
     socket.on(BROKER.VISITOR_ID, this.setVisitorId);
     socket.on(BROKER.MESSAGE, this.handleIncomingMessage.bind(this));
-    socket.emit(CLIENT.NEW_VISITOR);
+    let visitorId = this.getVisitorId();
+
+    if (!visitorId) { socket.emit(CLIENT.NEW_VISITOR); }
+    else { socket.emit(CLIENT.RETURNING_VISITOR, { visitorId });}
   },
 
   sendMessage(msg) {
+    msg.visitorId = this.getVisitorId();
     this.socket.emit(CLIENT.MESSAGE, msg);
   },
 
   handleIncomingMessage(msg) {
-    this.messageRecievedHandlers.forEach(h => h(msg));
+    this.messageRecievedHandlers.forEach(handle => handle(msg));
   },
 
   onMessageReceived(handler) {
     this.messageRecievedHandlers.push(handler);
   },
 
+  getVisitorId() {
+    return localStorage.getItem('visitorId');
+  },
+
   setVisitorId(data) {
-    console.log(data);
+    localStorage.setItem('visitorId', data.visitorId);
   }
 };
 

@@ -1,6 +1,10 @@
 var redis = require("redis");
-var RtmClient = require('@slack/client').RtmClient;
-var CLIENT_EVENTS = require('@slack/client').CLIENT_EVENTS;
+const axios = require('axios');
+const querystring = require('querystring');
+const CLIENT_EVENTS = require('@slack/client').CLIENT_EVENTS;
+const RtmClient = require('@slack/client').RtmClient;
+const SLACK_API_URL = 'https://slack.com/api';
+const Moniker = require('moniker');
 
 
 class SlackBroker {
@@ -8,6 +12,8 @@ class SlackBroker {
   constructor() {
     this.sub = redis.createClient();
     this.pub = redis.createClient();
+    this.visitors = redis.createClient();
+    this.channelIds = {};
     this.sub.on("message", this.onChannelMessage.bind(this));
     this.sub.subscribe("from:chindow");
 
@@ -31,19 +37,43 @@ class SlackBroker {
 
   onSlackMessage(message) {
     message = JSON.parse(message);
-    if (message.text) {
-      this.pub.publish("from:slack", message.text);
+    if (message.text && message.channel) {
+      this.visitors.hget("channel_id_to_uui", message.channel, (err, visitorId) => {
+        message.visitorId = visitorId;
+        message = { type: "text", data: message };
+        this.pub.publish("from:slack", JSON.stringify(message));
+      });
     }
   }
 
   onChannelMessage(redisChannel, message) {
-    console.log("SlackBroker:" + redisChannel + ": " + message);
-    const slackChannelId = this.channelMap["chindow-test"];
-    this.rtm.sendMessage(message, slackChannelId);
+    message = JSON.parse(message);
+    if (message.type === "text") {
+      this.handleTextMessage(message);
+    } else if (message.type === "new_visitor") {
+      const channelName = Moniker.choose();
+      this.createChannel(channelName, message.visitorId);
+    }
+  }
+  
+  handleTextMessage(message) {
+    const slackChannelId = message.data.channelId;
+    if (slackChannelId) {
+      this.rtm.sendMessage(message.data.body, slackChannelId);
+    }
   }
 
-  sendMessage(message, slackChannel) {
-    console.log(`I'm supposed to send this: ${message}`);
+  createChannel(name, visitorId) {
+    const token = "xoxp-94105311894-94121573042-154831839681-d1443ebae07624d73dbd9a6e3d9982d0";
+    return axios.post(`${SLACK_API_URL}/channels.create`, querystring.stringify({token, name}))
+        .then(response => {
+          if (response.status === 200) {
+            const channelId = response.data.channel.id;
+            this.visitors.set(visitorId, channelId);
+            this.visitors.hset("uui_to_channel_id", visitorId, channelId, redis.print);
+            this.visitors.hset("channel_id_to_uui", channelId, visitorId, redis.print);
+          }
+        });
   }
 
 }

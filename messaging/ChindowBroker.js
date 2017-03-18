@@ -11,6 +11,8 @@ class ChindowBroker {
   constructor(io) {
     this.sub = redis.createClient();
     this.pub = redis.createClient();
+    this.visitors = redis.createClient();
+    this.sockets = {};
     this.sub.on("message", this.onChannelMessage.bind(this));
     this.sub.subscribe("from:slack");
 
@@ -22,24 +24,44 @@ class ChindowBroker {
   }
 
   addEventListeners(socket) {
-    socket.on(CLIENT.NEW_VISITOR, ()=> this.onNewVisitor(socket));
+    socket.on(CLIENT.RETURNING_VISITOR, (message) => this.onReturningVisitor(socket, message));
+    socket.on(CLIENT.NEW_VISITOR, () => this.onNewVisitor(socket));
     socket.on(CLIENT.MESSAGE, (message) => this.onChindowMessage(socket, message) );
+  }
+
+  onReturningVisitor(socket, message) {
+    if (message.visitorId) {
+      this.sockets[message.visitorId] = socket;
+    }
   }
 
   onNewVisitor(socket) {
     const visitorId = crypto.randomBytes(48).toString('base64');
     socket.emit(BROKER.VISITOR_ID, { visitorId });
+
+    const message = { type: "new_visitor", visitorId };
+    this.pub.publish("from:chindow", JSON.stringify(message));
+    this.sockets[visitorId] = socket;
   }
 
   onChindowMessage(socket, message) {
     message.author = 'them';
-    this.pub.publish("from:chindow", message.body);
+    if (message.visitorId) {
+      this.visitors.hget("uui_to_channel_id", message.visitorId, (err, channelId) => {
+        message.channelId = channelId;
+        message = { type: "text", data: message };
+        this.pub.publish("from:chindow", JSON.stringify(message));
+      });
+    }
   }
 
   onChannelMessage(redisChannel, message) {
-    console.log("ChindowBroker:" + redisChannel + ": " + message);
-    if (this.socket) {
-      this.socket.emit(BROKER.MESSAGE, { author: "them", body: message });
+    message = JSON.parse(message);
+    if (message.data && message.data.visitorId) {
+      let socket = this.sockets[message.data.visitorId];
+      if (socket) {
+        socket.emit(BROKER.MESSAGE, { author: "them", body: message.data.text });
+      }
     }
   }
 }
