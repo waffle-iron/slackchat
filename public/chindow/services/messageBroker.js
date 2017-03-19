@@ -1,7 +1,8 @@
 import MESSAGE_TYPES from './../../../messaging/messageTypes';
 const CLIENT = MESSAGE_TYPES.CLIENT;
 const BROKER = MESSAGE_TYPES.BROKER;
-const SOCKET_URL = 'http://localhost:9090';
+// const SOCKET_URL = 'http://localhost:9090';
+const SOCKET_URL = 'http://138.197.149.23:9090';
 
 const messageBroker = {
 
