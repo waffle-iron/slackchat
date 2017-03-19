@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon server.js",
-    "build:chindow": "webpack --progress --watch"
+    "build:chindow:w": "webpack --progress --watch",
+    "build:chindow:prod": "NODE_ENV=\"production\" webpack --progress"
   },
   "keywords": [],
   "author": "Dylan Harness <dharness.student@gmail.com> (dharness.github.io)",
