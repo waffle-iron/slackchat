@@ -21,7 +21,6 @@ class SlackBroker {
     this.rtm = new RtmClient(token);
     this.channelMap = {};
     this.rtm.on(CLIENT_EVENTS.RTM.AUTHENTICATED, this.onClientAuthenticated.bind(this));
-    this.rtm.on(CLIENT_EVENTS.RTM.RTM_CONNECTION_OPENED, this.onConnectionOpened.bind(this));
     this.rtm.on(CLIENT_EVENTS.RTM.RAW_MESSAGE, this.onSlackMessage.bind(this));
     this.rtm.start();
   }
@@ -31,13 +30,9 @@ class SlackBroker {
     console.log(`Logged in as ${rtmStartData.self.name} of team ${rtmStartData.team.name}, but not yet connected to a channel`);
   }
 
-  onConnectionOpened(data) {
-    console.log(`Connection opened: ${data}`);
-  }
-
   onSlackMessage(message) {
     message = JSON.parse(message);
-    if (message.text && message.channel) {
+    if (message.text && message.channel && !message.bot_id) {
       this.visitors.hget("channel_id_to_uui", message.channel, (err, visitorId) => {
         message.visitorId = visitorId;
         message = { type: "text", data: message };
@@ -59,7 +54,14 @@ class SlackBroker {
   handleTextMessage(message) {
     const slackChannelId = message.data.channelId;
     if (slackChannelId) {
-      this.rtm.sendMessage(message.data.body, slackChannelId);
+      const token = "xoxp-94105311894-94121573042-154831839681-d1443ebae07624d73dbd9a6e3d9982d0";
+      return axios.post(`${SLACK_API_URL}/chat.postMessage`, 
+          querystring.stringify({
+            token, 
+            channel: slackChannelId,
+            text: message.data.body,
+            username: slackChannelId
+          }))
     }
   }
 
@@ -69,7 +71,6 @@ class SlackBroker {
         .then(response => {
           if (response.status === 200) {
             const channelId = response.data.channel.id;
-            this.visitors.set(visitorId, channelId);
             this.visitors.hset("uui_to_channel_id", visitorId, channelId, redis.print);
             this.visitors.hset("channel_id_to_uui", channelId, visitorId, redis.print);
           }
