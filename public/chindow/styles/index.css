@@ -32,6 +32,8 @@
 .sc-input-field {
   min-height: 55px;
   margin: 0px;
+  position: relative;
+  bottom: 0;
 }
 
 .sc-input-field--input {
@@ -44,7 +46,7 @@
   box-sizing: border-box;
   padding: 18px;
   font-size: 15px;
-  font-weight: 100;
+  font-weight: 400;
   line-height: 1.33;
   white-space: pre-wrap;
   word-wrap: break-word;
@@ -52,6 +54,11 @@
   background-color: #f4f7f9;;
   position: relative;
   -webkit-font-smoothing: antialiased;
+  transition: background-color .2s ease,box-shadow .2s ease;
+  max-height: 200px;
+  overflow: scroll;
+  position: absolute;
+  bottom: 0;
 }
 
 .sc-input-field--input:active, .sc-input-field--input:focus {
