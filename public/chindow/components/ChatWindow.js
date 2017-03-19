@@ -1,13 +1,14 @@
 import { h, render, Component } from 'preact';
 import MessageList from './MessageList'
 import UserInput from './UserInput'
+import Header from './Header'
 import messageBroker from './../services/messageBroker';
 
 
 class ChatWindow extends Component {
     constructor() {
       super();
-      this.state = { messages: [] };
+      this.state = { messages: [{author: 'them', body: "hey hey"}, {author: 'me', body: "bye bye"}] };
       this.messageBroker = messageBroker;
       this.messageBroker.init();
       this.messageBroker.onMessageReceived(this.onMessageReceived.bind(this));
@@ -24,8 +25,13 @@ class ChatWindow extends Component {
     }
 
     render() {
+        let classList = [
+          "sc-chat-window",
+          (this.props.active ? " active" : " inactive")
+        ];
         return (
-          <div className="sc-chat-window">
+          <div class={classList.join(' ')}>
+            <Header />
             <MessageList messages={this.state.messages}/>
             <UserInput onSubmit={this.onUserInputSubmit.bind(this)}/>
           </div>

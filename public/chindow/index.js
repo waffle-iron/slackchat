@@ -1,6 +1,9 @@
 import { h, render } from 'preact';
 import './styles/index.css';
-import ChatWindow from './components/ChatWindow';
+import './styles/launcher.css';
+import './styles/header.css';
+import './styles/message.css';
+import Launcher from './components/Launcher';
 
 
-render(<ChatWindow />, document.body);
+render(<Launcher />, document.body);
