@@ -23,8 +23,8 @@
   background-repeat: no-repeat;
   background-size: 100%;
   background-position: center;
-  width: 30px;
-  height: 30px;
+  min-width: 30px;
+  min-height: 30px;
   border-radius: 50%;
   align-self: center;
   margin-right: 15px;
@@ -42,9 +42,11 @@
 .sc-message--content.sent .sc-message--body {
   color: white;
   background-color: #1F8CEB;
+  max-width: calc(100% - 120px);
 }
 
 .sc-message--content.received .sc-message--body {
   color: #263238;
   background-color: #f4f7f9;
+  margin-right: 40px;
 }
