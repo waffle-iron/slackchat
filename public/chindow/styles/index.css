@@ -1,29 +1,63 @@
 .sc-chat-window {
-  width: 400px;
-  height: 100%;
+  width: 370px;
+  height: calc(100% - 120px);
   position: fixed;
-  right: 0px;
-  bottom: 0px;
+  right: 25px;
+  bottom: 100px;
   box-sizing: border-box;
-  border: solid 1px black;
+  box-shadow: 0px 7px 40px 2px rgba(148, 149, 150, 0.3);
   background: white;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+  transition: 0.3s ease-in-out;
+  border-radius: 10px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.sc-chat-window.inactive {
+  opacity: 0;
+  visibility: hidden;
+  bottom: 90px;
 }
 
 .sc-message-list {
   height: 80%;
   overflow-y: scroll;
+  background-color: white;
+  background-image: url(https://js.intercomcdn.com/images/background-1@2x.aea5e218.png);
+  background-size: 100%;
 }
 
 .sc-input-field {
-  height: 20%;
+  min-height: 55px;
   margin: 0px;
 }
 
 .sc-input-field--input {
-  height: 100%;
   width: 100%;
+  resize: none;
+  border: none;
+  outline: none;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  box-sizing: border-box;
+  padding: 18px;
+  font-size: 15px;
+  font-weight: 100;
+  line-height: 1.33;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  color: #565867;
+  background-color: #f4f7f9;;
+  position: relative;
+  -webkit-font-smoothing: antialiased;
+}
+
+.sc-input-field--input:active, .sc-input-field--input:focus {
+  box-shadow: none;
+  background-color: white;
+  box-shadow: 0px -5px 20px 0px rgba(150, 165, 190, 0.2);
 }
 
 .sc-message--me {

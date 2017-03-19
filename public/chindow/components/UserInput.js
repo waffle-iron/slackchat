@@ -14,18 +14,20 @@ class UserInput extends Component {
   }
 
   handleInputChange(e) {
+    console.log(e);
     this.setState({inputValue: e.target.value});
   }
 
   render () {
     return (
       <form className="sc-input-field" onSubmit={this.handleSubmit.bind(this)}>
-        <input
-          type="text"
+        <textarea
+          placeholder="Write a reply"
+          rows="1"
           value={this.state.inputValue} 
-          onInput={this.handleInputChange.bind(this)} 
+          onChange={this.handleInputChange.bind(this)} 
           className="sc-input-field--input" 
-          autocomplete="off"></input>
+          autocomplete="off"></textarea>
       </form>
     )
   }
