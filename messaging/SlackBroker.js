@@ -48,7 +48,7 @@ class SlackBroker {
       this.handleTextMessage(message);
     } else if (message.type === "new_visitor") {
       const channelName = Moniker.choose();
-      this.createChannel(channelName, message.visitorId);
+      this.createChannel(channelName, message.visitorId, message.teamId);
     }
   }
   
@@ -69,16 +69,19 @@ class SlackBroker {
     }
   }
 
-  createChannel(name, visitorId) {
-    const token = "xoxp-94105311894-94121573042-154831839681-d1443ebae07624d73dbd9a6e3d9982d0";
-    return axios.post(`${SLACK_API_URL}/channels.create`, querystring.stringify({token, name}))
-        .then(response => {
-          if (response.status === 200) {
-            const channelId = response.data.channel.id;
-            this.visitors.hset("uui_to_channel_id", visitorId, channelId, redis.print);
-            this.visitors.hset("channel_id_to_uui", channelId, visitorId, redis.print);
-          }
-        });
+  createChannel(name, visitorId, team_id) {
+    models.getAccount({team_id}, account => {
+      const token = account.access_token;
+      return axios.post(`${SLACK_API_URL}/channels.create`, querystring.stringify({token, name}))
+          .then(response => {
+          console.log(response.data)
+            if (response.status === 200) {
+              const channelId = response.data.channel.id;
+              this.visitors.hset("uui_to_channel_id", visitorId, channelId, redis.print);
+              this.visitors.hset("channel_id_to_uui", channelId, visitorId, redis.print);
+            }
+          });
+    });
   }
 
 }

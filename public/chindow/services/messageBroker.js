@@ -13,8 +13,9 @@ const messageBroker = {
     socket.on(BROKER.VISITOR_ID, this.setVisitorId);
     socket.on(BROKER.MESSAGE, this.handleIncomingMessage.bind(this));
     let visitorId = this.getVisitorId();
+    let teamId = this.getTeamId();
 
-    if (!visitorId) { socket.emit(CLIENT.NEW_VISITOR); }
+    if (!visitorId) { socket.emit(CLIENT.NEW_VISITOR, {teamId}); }
     else { socket.emit(CLIENT.RETURNING_VISITOR, { visitorId });}
   },
 
