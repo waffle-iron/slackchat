@@ -25,7 +25,7 @@ class ChindowBroker {
 
   addEventListeners(socket) {
     socket.on(CLIENT.RETURNING_VISITOR, (message) => this.onReturningVisitor(socket, message));
-    socket.on(CLIENT.NEW_VISITOR, () => this.onNewVisitor(socket));
+    socket.on(CLIENT.NEW_VISITOR, (message) => this.onNewVisitor(socket, message));
     socket.on(CLIENT.MESSAGE, (message) => this.onChindowMessage(socket, message) );
   }
 
@@ -35,11 +35,11 @@ class ChindowBroker {
     }
   }
 
-  onNewVisitor(socket) {
+  onNewVisitor(socket, { teamId }) {
     const visitorId = crypto.randomBytes(48).toString('base64');
     socket.emit(BROKER.VISITOR_ID, { visitorId });
 
-    const message = { type: "new_visitor", visitorId };
+    const message = { type: "new_visitor", visitorId, teamId };
     this.pub.publish("from:chindow", JSON.stringify(message));
     this.sockets[visitorId] = socket;
   }
