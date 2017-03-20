@@ -12,6 +12,7 @@ class Launcher extends Component {
   handleClick() {
     this.setState({ active: !this.state.active });
   }  
+  
 
   render () {
     let classList = [

@@ -2,6 +2,7 @@ import MESSAGE_TYPES from './../../../messaging/messageTypes';
 const CLIENT = MESSAGE_TYPES.CLIENT;
 const BROKER = MESSAGE_TYPES.BROKER;
 const SOCKET_URL = process.env.SC_SOCKET_URL;
+const io = require('socket.io-client');
 
 const messageBroker = {
 
@@ -19,6 +20,7 @@ const messageBroker = {
 
   sendMessage(msg) {
     msg.visitorId = this.getVisitorId();
+    msg.teamId = this.getTeamId();
     this.socket.emit(CLIENT.MESSAGE, msg);
   },
 
@@ -32,6 +34,10 @@ const messageBroker = {
 
   getVisitorId() {
     return localStorage.getItem('visitorId');
+  },
+
+  getTeamId() {
+    return SlackChat['teamId'];
   },
 
   setVisitorId(data) {

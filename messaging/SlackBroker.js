@@ -5,6 +5,7 @@ const CLIENT_EVENTS = require('@slack/client').CLIENT_EVENTS;
 const RtmClient = require('@slack/client').RtmClient;
 const SLACK_API_URL = 'https://slack.com/api';
 const Moniker = require('moniker');
+const models = require('../models');
 
 
 class SlackBroker {
@@ -54,14 +55,17 @@ class SlackBroker {
   handleTextMessage(message) {
     const slackChannelId = message.data.channelId;
     if (slackChannelId) {
-      const token = "xoxp-94105311894-94121573042-154831839681-d1443ebae07624d73dbd9a6e3d9982d0";
-      return axios.post(`${SLACK_API_URL}/chat.postMessage`, 
-          querystring.stringify({
-            token, 
-            channel: slackChannelId,
-            text: message.data.body,
-            username: slackChannelId
-          }))
+      const team_id = message.data.teamId;
+      models.getAccount({team_id}, account => {
+         
+        return axios.post(`${SLACK_API_URL}/chat.postMessage`, 
+            querystring.stringify({
+              token: account.access_token, 
+              channel: slackChannelId,
+              text: message.data.body,
+              username: slackChannelId
+            }))
+      });
     }
   }
 
