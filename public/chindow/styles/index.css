@@ -62,6 +62,13 @@
   bottom: 0;
 }
 
+.sc-input-field--input:empty:before {
+  content: attr(placeholder);
+  display: block; /* For Firefox */
+  color: rgba(86, 88, 103, 0.3);
+  outline: none;
+}
+
 .sc-input-field--input:active, .sc-input-field--input:focus {
   box-shadow: none;
   background-color: white;

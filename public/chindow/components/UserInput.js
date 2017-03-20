@@ -23,6 +23,7 @@ class UserInput extends Component {
           ref={(e) => this.userInput = e}
           onKeyDown={this.handleKey.bind(this)}
           contentEditable="true"
+          placeholder="Write a reply..."
           className="sc-input-field--input">
           {this.state.inputValue}
         </div>
