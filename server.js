@@ -6,6 +6,9 @@ const io = require('socket.io')(server);
 const initMessaging = require('./messaging');
 const slackAuth = require('./services/slackAuth');
 const helpers = require('express-helpers')
+const connectDb = require('./services/connections').connect;
+const routes = require('./routes');
+
 
 // set the view engine to ejs
 helpers(app);
@@ -15,36 +18,12 @@ app.use(express.static('public'));
 
 initMessaging(io);
 
+app.use(routes);
 
-// ------------- INDEX -------------
-app.get('/', (req, res) => {
-  if (req.query.code) {
-    slackAuth
-      .getAccessToken(req.query.code)
-      .then(response => {
-        const token = response.data.access_token;
-        res.render('setup.ejs', { token });
-      })
-  } else {
-    res.render('index.ejs' );
-  }
+connectDb().then(db => {
+  if (db) { console.log("Database connected"); }
+  server.listen(PORT, () => {
+    console.log(`App listening at http://127.0.0.1:${PORT}`)
+  });
 });
 
-// ------------- SIGNOUT -------------
-app.get('/signout', (req, res) => {
-  slackAuth
-    .signOut(req.query.token)
-    .then(response => {
-      console.log(response);
-      res.redirect('/');
-    })
-})
-
-// ------------- SETUP -------------
-app.get('/setup', (req, res) => {
-  res.render('setup.ejs');
-});
-
-server.listen(PORT, () => {
-  console.log(`App listening at http://127.0.0.1:${PORT}`)
-});

@@ -1,14 +1,17 @@
 import { h, render, Component } from 'preact';
-
+import Message from './Message'
 
 class MessageList extends Component {
 
+  componentDidUpdate(prevProps, prevState) {
+    this.scrollList.scrollTop = this.scrollList.scrollHeight;
+  }
 
   render () {
     return (
-      <div className="sc-message-list">
+      <div className="sc-message-list" ref={el => this.scrollList = el}>
         {this.props.messages.map(msg => {
-          return (<div class={`sc-message--${msg.author}`}>{msg.body}</div>)
+          return <Message message={msg}/>
         })}
       </div>)
   }

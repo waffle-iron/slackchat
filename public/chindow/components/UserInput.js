@@ -7,25 +7,26 @@ class UserInput extends Component {
     this.state = {inputValue: ''};
   }
 
-  handleSubmit(e) {
-    e.preventDefault();
-    this.props.onSubmit(this.state.inputValue);
-    this.setState({ inputValue: "" });
-  }
-
-  handleInputChange(e) {
-    this.setState({inputValue: e.target.value});
+  handleKey(event) {
+    if (event.keyCode == 13 && !event.shiftKey) {
+        event.preventDefault();
+        let messageText = this.userInput.textContent;
+        this.props.onSubmit(messageText);
+        this.setState({inputValue: ''});
+    }
   }
 
   render () {
     return (
-      <form className="sc-input-field" onSubmit={this.handleSubmit.bind(this)}>
-        <input
-          type="text"
-          value={this.state.inputValue} 
-          onInput={this.handleInputChange.bind(this)} 
-          className="sc-input-field--input" 
-          autocomplete="off"></input>
+      <form className="sc-input-field">
+        <div
+          ref={(e) => this.userInput = e}
+          onKeyDown={this.handleKey.bind(this)}
+          contentEditable="true"
+          placeholder="Write a reply..."
+          className="sc-input-field--input">
+          {this.state.inputValue}
+        </div>
       </form>
     )
   }
