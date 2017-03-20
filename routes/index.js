@@ -2,7 +2,11 @@ const express = require('express');
 const router = express.Router();
 const models = require('./../models');
 const slackAuth = require('./../services/slackAuth');
+const path = require('path');
+const fs = require('fs');
 
+
+const rawBundle = fs.readFileSync(path.join(__dirname, '../public', 'chindow', 'bundle.js'));
 
 router.get('/', (req, res) => {
   if (req.query.code) {
@@ -34,6 +38,12 @@ router.get('/accounts/:team_id', (req, res) => {
     // res.send(account);
     res.render('account', account);
   });
+});
+
+router.get('/embed/:team_id/', (req, res) => {
+  const team_id = req.params.team_id;
+  const config = { team_id };
+  res.send(`window.SlackChat = {teamId: ${team_id}}; ${rawBundle}`);
 });
 
 
