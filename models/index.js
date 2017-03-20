@@ -19,6 +19,14 @@ module.exports = {
       if (err) { return cb(err); }
       cb(docs);
     });
+  },
+
+  getAccount({team_id}, cb) {
+    const accounts = conn.db.collection('accounts');
+    accounts.find({team_id}).toArray((err, docs) => {
+      if (err) { return cb(err); }
+      cb(docs[0]);
+    });
   }
 
 }
