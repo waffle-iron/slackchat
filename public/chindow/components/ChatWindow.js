@@ -8,7 +8,7 @@ import messageBroker from './../services/messageBroker';
 class ChatWindow extends Component {
     constructor() {
       super();
-      this.state = { messages: [{author: 'them', body: "hey hey"}, {author: 'me', body: "bye bye"}] };
+      this.state = { messages: [] };
       this.messageBroker = messageBroker;
       this.messageBroker.init();
       this.messageBroker.onMessageReceived(this.onMessageReceived.bind(this));

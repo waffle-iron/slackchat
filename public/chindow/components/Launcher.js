@@ -6,7 +6,7 @@ class Launcher extends Component {
 
   constructor() {
     super();
-    this.state = { active: true };
+    this.state = { active: false };
   }
 
   handleClick() {
