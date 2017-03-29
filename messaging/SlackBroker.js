@@ -3,6 +3,7 @@ const axios = require('axios');
 const querystring = require('querystring');
 const CLIENT_EVENTS = require('@slack/client').CLIENT_EVENTS;
 const RtmClient = require('@slack/client').RtmClient;
+const io = require('socket.io-client');
 const SLACK_API_URL = 'https://slack.com/api';
 const Moniker = require('moniker');
 const models = require('../models');
@@ -10,7 +11,7 @@ const models = require('../models');
 
 class SlackBroker {
 
-  constructor() {
+  constructor({ botToken }) {
     this.sub = redis.createClient();
     this.pub = redis.createClient();
     this.visitors = redis.createClient();
@@ -18,12 +19,25 @@ class SlackBroker {
     this.sub.on("message", this.onChannelMessage.bind(this));
     this.sub.subscribe("from:chindow");
 
-    const token = "xoxp-94105311894-94121573042-154831839681-d1443ebae07624d73dbd9a6e3d9982d0";
-    this.rtm = new RtmClient(token);
+
+    this.botToken = botToken;
+    this.rtm = new RtmClient(botToken);
     this.channelMap = {};
     this.rtm.on(CLIENT_EVENTS.RTM.AUTHENTICATED, this.onClientAuthenticated.bind(this));
     this.rtm.on(CLIENT_EVENTS.RTM.RAW_MESSAGE, this.onSlackMessage.bind(this));
+    this.rtm.on(CLIENT_EVENTS.RTM.UNABLE_TO_RTM_START, this.onStartErr.bind(this));
     this.rtm.start();
+  }
+
+  getWssUrl({ botToken }) {
+    return axios.post(`${SLACK_API_URL}/rtm.start`, 
+        querystring.stringify({ botToken }))
+          .then(res => res.data)
+          .catch(err => console.log(err) );
+  }
+
+  onStartErr(err) {
+    console.log(err);
   }
 
   onClientAuthenticated(rtmStartData) {
@@ -69,17 +83,36 @@ class SlackBroker {
     }
   }
 
+  addToChannel({ token, channelId, botId }) {
+    const params = {
+      token,
+      channel: channelId,
+      user: botId
+    };
+    return axios.post(`${SLACK_API_URL}/channels.invite`, querystring.stringify(params))
+      .then(response => {
+        if (response.status === 200) {
+          return channelId;
+        }
+      });
+  }
+
   createChannel(name, visitorId, team_id) {
     models.getAccount({team_id}, account => {
+      if (!account) { return false; }
+
       const token = account.access_token;
+      const botId = account.bot.bot_user_id;
+
       return axios.post(`${SLACK_API_URL}/channels.create`, querystring.stringify({token, name}))
           .then(response => {
-          console.log(response.data)
             if (response.status === 200) {
               const channelId = response.data.channel.id;
+              return this.addToChannel({token, channelId, botId})
+            }
+          }).then(channelId => {
               this.visitors.hset("uui_to_channel_id", visitorId, channelId, redis.print);
               this.visitors.hset("channel_id_to_uui", channelId, visitorId, redis.print);
-            }
           });
     });
   }

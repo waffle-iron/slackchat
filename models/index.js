@@ -8,7 +8,6 @@ module.exports = {
     delete accountInfo.ok;
     accounts.replaceOne({team_id: accountInfo.team_id}, accountInfo, {upsert: true}, (err, result) => {
       if (err) { return cb(err); }
-      console.log(result);
       cb(result.ops[0]);
     });
   },
@@ -26,6 +25,14 @@ module.exports = {
     accounts.find({team_id}).toArray((err, docs) => {
       if (err) { return cb(err); }
       cb(docs[0]);
+    });
+  },
+
+  getTokens(cb) {
+    const accounts = conn.db.collection('accounts');
+    accounts.distinct("access_token", (err, tokens) => {
+      if (err) { return cb(err); }
+      cb(tokens);
     });
   }
 

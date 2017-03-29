@@ -8,6 +8,7 @@ const slackAuth = require('./services/slackAuth');
 const helpers = require('express-helpers')
 const connectDb = require('./services/connections').connect;
 const routes = require('./routes');
+const model = require('./models');
 
 
 // set the view engine to ejs
@@ -16,14 +17,19 @@ app.set('view engine', 'ejs');
 app.use(express.static('public'));
 
 
-initMessaging(io);
+
 
 app.use(routes);
 
 connectDb().then(db => {
-  if (db) { console.log("Database connected"); }
-  server.listen(PORT, () => {
-    console.log(`App listening at http://127.0.0.1:${PORT}`)
+  if (!db) { return console.log("Database not connected"); }
+
+  model.getTokens(tokens => {
+    initMessaging(io, ["xoxb-160488106754-UXSklr0a0IbHPLorfl5cnn1q"]);
+    server.listen(PORT, () => {
+      console.log(`App listening at http://127.0.0.1:${PORT}`)
+    });
   });
+
 });
 

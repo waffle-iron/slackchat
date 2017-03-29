@@ -16,6 +16,7 @@ router.get('/', (req, res) => {
         if (response.data.ok === true) {
           models.addAccount(response.data, () => {
             const token = response.data.access_token;
+            console.log(response.data)
             res.redirect('/accounts');
           });
         }
@@ -52,7 +53,6 @@ router.get('/signout', (req, res) => {
   slackAuth
     .signOut(req.query.token)
     .then(response => {
-      console.log(response.data);
       res.redirect('/');
     })
 })
