@@ -16,7 +16,6 @@ router.get('/', (req, res) => {
         if (response.data.ok === true) {
           models.addAccount(response.data, () => {
             const token = response.data.access_token;
-            console.log(response.data)
             res.redirect('/accounts');
           });
         }

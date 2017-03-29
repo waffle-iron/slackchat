@@ -47,6 +47,7 @@ class SlackBroker {
 
   onSlackMessage(message) {
     message = JSON.parse(message);
+    console.log(message);
     if (message.text && message.channel && !message.bot_id) {
       this.visitors.hget("channel_id_to_uui", message.channel, (err, visitorId) => {
         message.visitorId = visitorId;

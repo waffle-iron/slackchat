@@ -24,8 +24,8 @@ app.use(routes);
 connectDb().then(db => {
   if (!db) { return console.log("Database not connected"); }
 
-  model.getTokens(tokens => {
-    initMessaging(io, ["xoxb-160488106754-UXSklr0a0IbHPLorfl5cnn1q"]);
+  model.getBotTokens(botTokens => {
+    initMessaging(io, botTokens);
     server.listen(PORT, () => {
       console.log(`App listening at http://127.0.0.1:${PORT}`)
     });

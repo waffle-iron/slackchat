@@ -28,9 +28,9 @@ module.exports = {
     });
   },
 
-  getTokens(cb) {
+  getBotTokens(cb) {
     const accounts = conn.db.collection('accounts');
-    accounts.distinct("access_token", (err, tokens) => {
+    accounts.distinct("bot.bot_access_token", (err, tokens) => {
       if (err) { return cb(err); }
       cb(tokens);
     });
