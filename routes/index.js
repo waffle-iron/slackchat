@@ -26,9 +26,9 @@ router.get('/', (req, res) => {
 });
 
 
-router.get('/dashboard', (req, res) => {
-  res.render('dashboard');
-});
+router.get('/dashboard/analytics', (req, res) => { res.render('dashboard/analytics');});
+router.get('/dashboard/widget', (req, res) => { res.render('dashboard/widget');});
+router.get('/dashboard/settings', (req, res) => { res.render('dashboard/settings');});
 
 
 router.get('/accounts', (req, res) => {
