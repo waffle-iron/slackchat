@@ -23,7 +23,7 @@
         </div>
       </div>
       <div class="ch-horz-divider"></div>
-      <a class="ch-dashboard-dropdown-item link" data-route="/dashboard/settings">
+      <a class="ch-dashboard-dropdown-item link" data-route="/dashboard/settings" >
         Settings
       </a>
       <a class="ch-dashboard-dropdown-item link" data-route="/signout">
@@ -32,13 +32,3 @@
     </div>
   </button>
 </div>
-
-<script>
-  document.querySelectorAll('.link').forEach(link => {
-    link.addEventListener('click', function () {
-      const route = this.getAttribute('data-route');
-      console.log(route);
-      window.location.href = route;
-    }, true); 
-  })
-</script>
