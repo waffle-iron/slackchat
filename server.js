@@ -15,11 +15,9 @@ const model = require('./models');
 helpers(app);
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
-
-
-
-
 app.use(routes);
+
+
 
 connectDb().then(db => {
   if (!db) { return console.log("Database not connected"); }

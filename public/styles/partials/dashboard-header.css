@@ -1,0 +1,132 @@
+.ch-dashboard-header {
+  width: 100%;
+  padding: 30px 0px 10px 0px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.ch-dashboard-header--brand {
+  display: flex;
+  flex-direction: row;
+}
+
+.ch-dashboard-header--brand .ch-brand-text {
+  color: #2C8EFF;
+  font-weight: 600;
+  font-size: 20px;
+  align-self: center;
+  margin-left: 10px;
+}
+
+.ch-dashboard-header--brand img {
+  height: 40px;
+}
+
+.ch-dashboard-header--dropdown {
+  display: flex;
+  cursor: pointer;
+  background: none;
+  border: none;
+  position: relative;
+}
+
+.ch-dashboard-header--avatar-img {
+  cursor: pointer;
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  background: #2C8EFF;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: white;
+  font-weight: 600;
+  font-size: 20px;
+  align-self: center;
+}
+
+.ch-dashboard-header--dropdown-icon {
+  width: 10px;
+  max-height: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-self: center;
+  margin-left: 10px;
+}
+
+.ch-dashboard-header--dropdown-icon img {
+  height: 30px;
+  width: 10px;
+}
+
+.ch-dashboard-dropdown-menu {
+  position: absolute;
+  width: 220px;
+  border: solid 2px #F1F1F1;
+  border-radius: 5px;
+  background: white;
+  top: 100%;
+  right: 0px;
+  visibility: hidden;
+  opacity: 0;
+  transition: top 0.3s, opacity 0.3s, visibility 0s 0s;
+  color:#676767;
+  font-size: 14px;
+  padding: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.1);
+}
+
+.ch-dashboard-header--dropdown:focus .ch-dashboard-dropdown-menu {
+  visibility: visible;
+  opacity: 1;
+  top: calc(100% + 10px);
+}
+
+.ch-dashboard-dropdown-item {
+  text-align: left;
+  width: 210px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  padding-top: 10px;
+}
+
+.ch-dashboard-dropdown-item.link {
+  color: #676767;
+  display: block;
+}
+
+.ch-dashboard-dropdown-item.link:hover {
+  color: #2C8EFF;
+}
+
+.ch-dashboard-dropdown-item--user {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 10px;
+}
+
+.ch-dashboard-dropdown-email {
+  font-size: 12px;
+  font-weight: 100;
+  padding-left: 25px;
+}
+
+.ch-dashboard-dropdown-username {
+  display: flex;
+  flex-direction: row;
+  
+}
+
+.ch-dashboard-dropdown-username-text {
+  padding-left: 5px
+}
+
+.ch-dashboard-dropdown-circle {
+  border-radius: 50%;
+	width: 20px;
+	height: 20px;
+  background: #2C8EFF;
+}

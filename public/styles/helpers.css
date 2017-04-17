@@ -1,0 +1,12 @@
+.ch-container {
+  width: 100%;
+  max-width: 1000px;
+  display: block;
+  margin: auto;
+}
+
+.ch-horz-divider {
+  width: 100%;
+  height: 2px;
+  background: #F1F1F1;
+}

@@ -1,0 +1,44 @@
+<div class="ch-dashboard-header">
+  <div class="ch-dashboard-header--brand">
+    <img src="assets/images/smokey.png" />
+    <div class="ch-brand-text">chindow.io</div>
+  </div>
+
+  <button class="ch-dashboard-header--dropdown">
+    <div class="ch-dashboard-header--avatar-img">K</div>
+    <div class="ch-dashboard-header--dropdown-icon">
+      <img src="assets/images/dropdown-arrow-icon.svg" />
+    </div>
+
+    <div class="ch-dashboard-dropdown-menu" >
+      <div class="ch-dashboard-dropdown-item">
+        <div class="ch-dashboard-dropdown-item--user">
+          <div class="ch-dashboard-dropdown-username">
+            <div class="ch-dashboard-dropdown-circle"></div>
+            <div class="ch-dashboard-dropdown-username-text">
+              dharness
+            </div>
+          </div>
+          <div class="ch-dashboard-dropdown-email">dharness@kingofthestack.com</div>
+        </div>
+      </div>
+      <div class="ch-horz-divider"></div>
+      <a class="ch-dashboard-dropdown-item link" data-route="/dashboard/settings">
+        Settings
+      </a>
+      <a class="ch-dashboard-dropdown-item link" data-route="/signout">
+        Logout
+      </a>
+    </div>
+  </button>
+</div>
+
+<script>
+  document.querySelectorAll('.link').forEach(link => {
+    link.addEventListener('click', function () {
+      const route = this.getAttribute('data-route');
+      console.log(route);
+      window.location.href = route;
+    }, true); 
+  })
+</script>

@@ -26,6 +26,11 @@ router.get('/', (req, res) => {
 });
 
 
+router.get('/dashboard', (req, res) => {
+  res.render('dashboard');
+});
+
+
 router.get('/accounts', (req, res) => {
   models.getAccounts(accounts => {
     res.send(accounts);
