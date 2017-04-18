@@ -14,12 +14,10 @@ const model = require('./models');
 // set the view engine to ejs
 helpers(app);
 app.set('view engine', 'ejs');
-app.use(express.static('public'));
-
-
-
-
+app.use(express.static(__dirname + '/public'));
 app.use(routes);
+
+
 
 connectDb().then(db => {
   if (!db) { return console.log("Database not connected"); }

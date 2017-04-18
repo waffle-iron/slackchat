@@ -1,0 +1,19 @@
+<link rel="stylesheet" href="./../styles/base.css">
+<link rel="stylesheet" href="./../styles/helpers.css">
+<link rel="stylesheet" href="./../styles/dashboard.css">
+<link rel="stylesheet" href="./../styles/partials/dashboard-header.css">
+<link rel="stylesheet" href="./../styles/partials/info-nav.css">
+<link rel="stylesheet" href="./../styles/partials/section-menu.css">
+
+<div class="ch-container">
+  <%- include ../partials/dashboard-header.ejs %>
+  <div class="ch-horz-divider"></div>
+  <%- include ../partials/dashboard-info-nav.ejs %>
+  <div class="ch-horz-divider"></div>
+  <div class="ch-dashboard-content">
+    <%- include ../partials/dashboard-section-menu.ejs %>
+    <%- include settings-form.ejs %>
+  </div>
+</div>
+
+<script src="./../js/build.js"></script>
