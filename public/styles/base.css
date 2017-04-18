@@ -9,10 +9,17 @@ html, body {
   width: 100%;
   height: 100%;
   color: #676767;
+  -webkit-font-smoothing: antialiased;
 }
 
 a {
   text-decoration: none;
 }
 
-button:focus {outline:0;}
+textarea:focus, input:focus, button:focus{
+    outline: none;
+}
+
+button {
+  border:none;
+}
