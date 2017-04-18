@@ -1,0 +1,19 @@
+.ch-widget-form {
+  padding: 55px;
+}
+
+.ch-widget-title {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.ch-widget-input {
+  border-radius: 5px;
+  border: solid 1px #E8E8E8;
+  padding: 10px;
+  min-width: 550px;
+  min-height: 300px;
+  color: #676767;
+  outline: none;
+  font-size: 14px;
+}
