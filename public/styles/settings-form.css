@@ -12,6 +12,8 @@
   padding: 10px;
   width: 250px;
   color: #676767;
+  outline: none;
+  font-size: 14px;
 }
 
 .ch-settings-section {
@@ -24,4 +26,5 @@
   padding: 15 25 15 25px;
   color: white;
   font-size: 16px;
+  border:none;
 }
