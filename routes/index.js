@@ -16,7 +16,9 @@ router.get('/', (req, res) => {
         if (response.data.ok === true) {
           models.addAccount(response.data, () => {
             const token = response.data.access_token;
-            res.redirect('/accounts');
+            // the response is structured differently for login vs signup
+            const team_id = response.data.team_id || response.data.team.id;
+            res.redirect(`/${team_id}/dashboard/analytics`);
           });
         }
       })
@@ -26,9 +28,27 @@ router.get('/', (req, res) => {
 });
 
 
-router.get('/dashboard/analytics', (req, res) => { res.render('dashboard/analytics');});
-router.get('/dashboard/widget', (req, res) => { res.render('dashboard/widget');});
-router.get('/dashboard/settings', (req, res) => { res.render('dashboard/settings');});
+router.get('/:team_id/dashboard/analytics', (req, res) => {
+  const team_id = req.params.team_id;
+  models.getAccount({ team_id }, account => {
+    if (!account) {return res.sendStatus(404);}
+    res.render('dashboard/analytics', account);
+  });
+});
+router.get('/:team_id/dashboard/widget', (req, res) => {
+  const team_id = req.params.team_id;
+  models.getAccount({ team_id }, account => {
+    if (!account) {return res.sendStatus(404);}
+    res.render('dashboard/widget', account);
+  });
+});
+router.get('/:team_id/dashboard/settings', (req, res) => {
+  const team_id = req.params.team_id;
+  models.getAccount({ team_id }, account => {
+    if (!account) {return res.sendStatus(404);}
+    res.render('dashboard/settings', account);
+  });
+});
 
 
 router.get('/accounts', (req, res) => {
