@@ -26,3 +26,11 @@
   height: 20px;
   margin-right: 10px;
 }
+
+.ch-section-menu-item--text {
+  color: #676767;
+}
+
+.ch-section-menu-item:hover .ch-section-menu-item--text {
+  color: #2C8EFF;
+}
