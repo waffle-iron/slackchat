@@ -2,7 +2,7 @@
   padding: 55px;
 }
 .ch-settings-title {
-  font-size: 16px;
+  font-size: 15px;
   margin-bottom: 10px;
 }
 
@@ -23,8 +23,23 @@
 .ch-settings-button {
   background: #2C8EFF;
   border-radius: 5px;
-  padding: 15 25 15 25px;
+  padding: 14 25 14 25px;
   color: white;
-  font-size: 16px;
+  font-size: 15px;
   border:none;
+  font-weight: 400;
+  text-shadow: 0px 0px #ffffff;
+  position: relative;
+  box-shadow: 0px 3px 0px #0E7BF8;
+}
+
+.ch-settings-button:hover {
+  background: #0E7BF8;
+  box-shadow: 0px 3px 0px #006EED;
+}
+
+.ch-settings-button:active {
+  background: #006EED;
+  padding: 14 25 13 25px;
+  bottom: -1px;
 }
