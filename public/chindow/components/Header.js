@@ -2,10 +2,10 @@ import { h, Component } from 'preact';
 
 
 class Header extends Component {
-  render () {
+  render (props) {
     return (
       <div class="sc-header">
-        I am the header
+        {props.teamName}
       </div>
     )
   }
