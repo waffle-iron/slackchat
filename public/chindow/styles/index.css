@@ -23,7 +23,7 @@
 
 .sc-message-list {
   height: 80%;
-  overflow-y: scroll;
+  overflow-y: auto;
   background-color: white;
   background-image: url(https://js.intercomcdn.com/images/background-1@2x.aea5e218.png);
   background-size: 100%;
@@ -60,6 +60,8 @@
   overflow: scroll;
   position: absolute;
   bottom: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .sc-input-field--input:empty:before {
