@@ -45,6 +45,10 @@ const messageBroker = {
     return SlackChat['teamName'];
   },
 
+  getImageUrl() {
+    return SlackChat['imageUrl'];
+  },
+
   setVisitorId(data) {
     localStorage.setItem('visitorId', data.visitorId);
   }
