@@ -60,7 +60,6 @@ router.get('/accounts', (req, res) => {
 router.get('/accounts/:team_id', (req, res) => {
   const team_id = req.params.team_id;
   models.getAccount({ team_id }, account => {
-    // res.send(account);
     res.render('account', account);
   });
 });
@@ -68,7 +67,14 @@ router.get('/accounts/:team_id', (req, res) => {
 router.get('/embed/:team_id/', (req, res) => {
   const team_id = req.params.team_id;
   const config = { team_id };
-  res.send(`window.SlackChat = {teamId: '${team_id}'}; ${rawBundle}`);
+
+  models.getAccount({ team_id }, account => {
+    res.send(`window.SlackChat = {
+      teamId: '${team_id}',
+      teamName: '${account.team_name}'
+    }; ${rawBundle}`);
+  });
+
 });
 
 

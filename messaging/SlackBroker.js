@@ -1,4 +1,4 @@
-var redis = require("redis");
+const redis = require("redis");
 const axios = require('axios');
 const querystring = require('querystring');
 const CLIENT_EVENTS = require('@slack/client').CLIENT_EVENTS;
@@ -31,7 +31,8 @@ class SlackBroker {
 
   getWssUrl({ botToken }) {
     return axios.post(`${SLACK_API_URL}/rtm.start`, 
-        querystring.stringify({ botToken }))
+        querystring
+          .stringify({ botToken }))
           .then(res => res.data)
           .catch(err => console.log(err) );
   }
@@ -47,7 +48,6 @@ class SlackBroker {
 
   onSlackMessage(message) {
     message = JSON.parse(message);
-    console.log(message);
     if (message.text && message.channel && !message.bot_id) {
       this.visitors.hget("channel_id_to_uui", message.channel, (err, visitorId) => {
         message.visitorId = visitorId;

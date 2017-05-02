@@ -41,6 +41,10 @@ const messageBroker = {
     return SlackChat['teamId'];
   },
 
+  getTeamName() {
+    return SlackChat['teamName'];
+  },
+
   setVisitorId(data) {
     localStorage.setItem('visitorId', data.visitorId);
   }
