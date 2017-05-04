@@ -1,6 +1,7 @@
 const crypto = require('crypto');
 const redis = require("redis");
 const MESSAGE_TYPES = require('./messageTypes');
+const models = require('../models');
 const CLIENT = MESSAGE_TYPES.CLIENT;
 const BROKER = MESSAGE_TYPES.BROKER;
 var mainSocket;
@@ -42,6 +43,7 @@ class ChindowBroker {
     const message = { type: "new_visitor", visitorId, teamId };
     this.pub.publish("from:chindow", JSON.stringify(message));
     this.sockets[visitorId] = socket;
+    models.incrementVisitorCount(teamId);
   }
 
   onChindowMessage(socket, message) {

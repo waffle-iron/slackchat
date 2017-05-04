@@ -182,5 +182,6 @@ function createChart(visitorData) {
     }; 
 }
 
-let visitorData = getVisitorData()
-createChart(visitorData);
+getVisitorData().then((visitorData) => {
+    createChart(visitorData);
+})

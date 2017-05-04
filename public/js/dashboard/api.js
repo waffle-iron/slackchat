@@ -1,65 +1,23 @@
 function getVisitorData () {
-    return [
-        {
-            numVisitors: 100,
-            date: 'May 1'
-        },
-        {
-            numVisitors: 120,
-            date: 'May 2'
-        },
-        {
-            numVisitors: 150,
-            date: 'May 3'
-        },
-        {
-            numVisitors: 110,
-            date: 'May 4'
-        },
-        {
-            numVisitors: 100,
-            date: 'May 5'
-        },
-        {
-            numVisitors: 300,
-            date: 'May 6'
-        },
-        {
-            numVisitors: 150,
-            date: 'May 7'
-        },
-        {
-            numVisitors: 130,
-            date: 'May 8'
-        },
-        {
-            numVisitors: 120,
-            date: 'May 9'
-        },
-        {
-            numVisitors: 150,
-            date: 'May 10'
-        },
-        {
-            numVisitors: 130,
-            date: 'May 11'
-        },
-        {
-            numVisitors: 110,
-            date: 'May 12'
-        },
-        {
-            numVisitors: 100,
-            date: 'May 13'
-        },
-        {
-            numVisitors: 120,
-            date: 'May 14'
-        },
-        {
-            numVisitors: 120,
-            date: 'May 15'
+    const URL = 'http://127.0.0.1:9090'
+    const teamId = window.location.pathname.split('/')[1];
+    
+    return axios.get(`${URL}/api/accounts/${teamId}`)
+    .then(function (res) {
+        if (res.data) {
+            // TODO (nnur): remove this later, and do it on
+            // the server with query params
+            const totalGraphSize = 15;
+            const numPaddingData = totalGraphSize - res.data.visitorData.length;
+            for (let i = 0; i < numPaddingData; i++) {
+                let { date } = res.data.visitorData[res.data.visitorData.length - 1];
+                res.data.visitorData.push({date: date - 1, numVisitors:0 });
+            }
+            return res.data.visitorData.reverse();
         }
-    ]
+    })
+    .catch(function (error) {
+        console.log(error);
+    });
 }
 

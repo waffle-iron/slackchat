@@ -35,6 +35,7 @@ router.get('/:team_id/dashboard/analytics', (req, res) => {
     res.render('dashboard/analytics', account);
   });
 });
+
 router.get('/:team_id/dashboard/widget', (req, res) => {
   const team_id = req.params.team_id;
   models.getAccount({ team_id }, account => {
@@ -42,6 +43,7 @@ router.get('/:team_id/dashboard/widget', (req, res) => {
     res.render('dashboard/widget', account);
   });
 });
+
 router.get('/:team_id/dashboard/settings', (req, res) => {
   const team_id = req.params.team_id;
   models.getAccount({ team_id }, account => {
@@ -51,8 +53,12 @@ router.get('/:team_id/dashboard/settings', (req, res) => {
 });
 
 
-router.get('/accounts', (req, res) => {
+router.get('/api/accounts', (req, res) => {
   models.getAccounts(accounts => {
+    models.incrementVisitorCount({team_id:'sdfdsf'}, ()=> {
+      console.log('hahaaaaa');
+      
+    });
     res.send(accounts);
   });
 });
@@ -62,6 +68,13 @@ router.get('/accounts/:team_id', (req, res) => {
   models.getAccount({ team_id }, account => {
     // res.send(account);
     res.render('account', account);
+  });
+});
+
+router.get('/api/accounts/:team_id', (req, res) => {
+  const team_id = req.params.team_id;
+  models.getAccount({ team_id }, account => {
+    res.send(account);
   });
 });
 

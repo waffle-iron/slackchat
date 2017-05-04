@@ -16,7 +16,7 @@ const messageBroker = {
     let teamId = this.getTeamId();
 
     if (!visitorId) { socket.emit(CLIENT.NEW_VISITOR, {teamId}); }
-    else { socket.emit(CLIENT.RETURNING_VISITOR, { visitorId });}
+    else { socket.emit(CLIENT.RETURNING_VISITOR, { visitorId, teamId });}
   },
 
   sendMessage(msg) {

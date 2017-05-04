@@ -1,5 +1,5 @@
 const conn = require('./../services/connections');
-
+const moment = require("moment");
 
 module.exports = {
 
@@ -34,6 +34,19 @@ module.exports = {
       if (err) { return cb(err); }
       cb(tokens);
     });
+  },
+
+  incrementVisitorCount({team_id}, cb) {
+    const accounts = conn.db.collection('accounts');
+    const today = Number(moment(new Date()).format("YYYYMMDD"));
+
+    accounts.update({team_id: "T2S3395SA", "visitorData.date": today},  {$inc:{"visitorData.$.numVisitors":1}}, (err, docs) => {
+      if (err) { return cb(err); }
+      else if (err === null && docs.result.nModified === 0) {
+        accounts.update({team_id: 'T2S3395SA'}, { "$push": { "visitorData": { "date": today, "numVisitors": 1 }}}, (err, docs) => { cb(err, docs); });
+      }
+    })
+
   }
 
 }
