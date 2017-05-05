@@ -5,7 +5,7 @@ const path = require('path');
 const fs = require('fs');
 
 
-const rawBundle = fs.readFileSync(path.join(__dirname, '../../public', 'chindow', 'bundle.js'));
+const rawBundle = fs.readFileSync(path.join(__dirname, '../../public', 'build', 'chindow.bundle.js'));
 
 router.get('/:team_id/', (req, res) => {
   const team_id = req.params.team_id;

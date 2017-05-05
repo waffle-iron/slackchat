@@ -15,10 +15,13 @@ if (process.env.NODE_ENV === 'production') {
 
 
 module.exports = {
-  entry: "./public/chindow",
+  entry: {
+    chindow: "./public/chindow",
+    dashboard: "./public/js/dashboard"
+  },
   output: {
-    path: path.resolve(__dirname, "public/chindow"),
-    filename: "bundle.js"
+    path: path.resolve(__dirname, "public/build"),
+    filename: "[name].bundle.js"
   },
   module: {
     rules: [

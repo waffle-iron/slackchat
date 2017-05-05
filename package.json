@@ -5,9 +5,12 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "predev": "npm run build:w &",
+    "dev": "nodemon server.js",
+    "prestart": "npm run build:prod",
     "start": "nodemon server.js",
-    "build:chindow:w": "webpack --progress --watch",
-    "build:chindow:prod": "NODE_ENV=\"production\" webpack --progress"
+    "build:w": "webpack --progress --watch",
+    "build:prod": "NODE_ENV=\"production\" webpack --progress"
   },
   "keywords": [],
   "author": "Dylan Harness <dharness.student@gmail.com> (dharness.github.io)",
