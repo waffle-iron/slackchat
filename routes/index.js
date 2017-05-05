@@ -17,6 +17,9 @@ router.get('/', (req, res) => {
       .getAccessToken(req.query.code)
       .then(response => {
         if (response.data.ok === true) {
+
+          console.log(response.data);
+
           const token = response.data.access_token;
           axios.post(`${SLACK_API_URL}/team.info`, querystring.stringify({ token }))
             .then(({ data }) => {
@@ -33,7 +36,6 @@ router.get('/', (req, res) => {
     res.render('index.ejs' );
   }
 });
-
 
 router.get('/:team_id/dashboard/analytics', (req, res) => {
   const team_id = req.params.team_id;
@@ -86,7 +88,6 @@ router.get('/embed/:team_id/', (req, res) => {
 
 });
 
-
 // ------------- SIGNOUT -------------
 router.get('/signout', (req, res) => {
   slackAuth
@@ -94,11 +95,6 @@ router.get('/signout', (req, res) => {
     .then(response => {
       res.redirect('/');
     })
-})
-
-// ------------- SETUP -------------
-router.get('/setup', (req, res) => {
-  res.render('setup.ejs');
 });
 
 module.exports = router;
