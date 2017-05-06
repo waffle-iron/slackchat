@@ -1,3 +1,4 @@
+const crypto = require('crypto');
 const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 9090;
@@ -9,7 +10,17 @@ const helpers = require('express-helpers');
 const connectDb = require('./services/connections').connect;
 const routes = require('./routes');
 const model = require('./models');
+const session = require('express-session');
 
+
+app.use(session({
+  secret: 'keyboard cat',
+  resave: true,
+  saveUninitialized: true,
+  genid(req) {
+    return crypto.randomBytes(48).toString('base64');
+  }
+}));
 
 // set the view engine to ejs
 helpers(app);
@@ -21,8 +32,6 @@ app.use(function(req, res, next) {
 });
 app.use(express.static(__dirname + '/public'));
 app.use(routes);
-
-
 
 
 connectDb().then(db => {
