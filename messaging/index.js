@@ -1,4 +1,3 @@
-var redis = require("redis");
 const SlackBroker = require('./SlackBroker');
 const ChindowBroker = require('./ChindowBroker');
 

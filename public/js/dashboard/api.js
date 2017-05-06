@@ -1,10 +1,13 @@
+import axios from 'axios';
+
 function getVisitorData () {
     const URL = 'http://127.0.0.1:9090'
     const teamId = window.location.pathname.split('/')[1];
     
     return axios.get(`${URL}/api/accounts/${teamId}`)
-    .then(function (res) {
+    .then(res => {
         if (res.data) {
+            console.log(res)
             // TODO (nnur): remove this later, and do it on
             // the server with query params
             const totalGraphSize = 15;
@@ -16,9 +19,7 @@ function getVisitorData () {
             return res.data.visitorData.reverse();
         }
     })
-    .catch(function (error) {
-        console.log(error);
-    });
+    .catch(error => { console.log(error) });
 }
 
 export default getVisitorData;

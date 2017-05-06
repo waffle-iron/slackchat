@@ -12,11 +12,15 @@ router.get('/:team_id/', (req, res) => {
   const config = { team_id };
 
   models.getAccount({ team_id }, account => {
-    res.send(`window.SlackChat = {
-      teamId: '${team_id}',
-      teamName: '${account.team_name}',
-      imageUrl: '${account.icon.image_34}'
-    }; ${rawBundle}`);
+    if (account) {
+      res.send(`window.SlackChat = {
+        teamId: '${team_id}',
+        teamName: '${account.team_name}',
+        imageUrl: '${account.icon.image_34}'
+      }; ${rawBundle}`);
+    } else {
+      res.sendStatus(404);
+    }
   });
 
 });

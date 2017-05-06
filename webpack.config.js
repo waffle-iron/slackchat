@@ -8,6 +8,7 @@ const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 let ENV = {
   'process.env': {
     'NODE_ENV': JSON.stringify(process.env.NODE_ENV) || 'development',
+    'development': true,
     'SC_SOCKET_URL': JSON.stringify('http://localhost:9090')
   }
 }
@@ -18,6 +19,7 @@ if (process.env.NODE_ENV === 'production') {
 
 
 module.exports = {
+  devtool: 'source-map',
   entry: {
     chindow: "./public/chindow",
     dashboard: "./public/js/dashboard"
@@ -47,7 +49,9 @@ module.exports = {
     ]
   },
   plugins: [
-    new UglifyJSPlugin(),
+    new UglifyJSPlugin({
+      sourceMap: true
+    }),
     new webpack.DefinePlugin(ENV),
     new ExtractTextPlugin('styles.bundle.css'),
     new OptimizeCssAssetsPlugin({
