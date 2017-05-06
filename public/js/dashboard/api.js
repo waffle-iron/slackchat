@@ -63,3 +63,4 @@ function getVisitorData () {
     ]
 }
 
+export default getVisitorData;
