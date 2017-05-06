@@ -50,6 +50,7 @@ class ChindowBroker {
     message.author = 'them';
     if (message.visitorId) {
       this.visitors.hget("uui_to_channel_id", message.visitorId, (err, channelId) => {
+        if (err) { return err; }
         message.channelId = channelId;
         message = { type: "text", data: message };
         this.pub.publish("from:chindow", JSON.stringify(message));

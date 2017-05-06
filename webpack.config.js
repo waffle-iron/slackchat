@@ -1,6 +1,9 @@
 const path = require('path');
 const webpack = require('webpack');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+
 
 let ENV = {
   'process.env': {
@@ -15,10 +18,13 @@ if (process.env.NODE_ENV === 'production') {
 
 
 module.exports = {
-  entry: "./public/chindow",
+  entry: {
+    chindow: "./public/chindow",
+    dashboard: "./public/js/dashboard"
+  },
   output: {
-    path: path.resolve(__dirname, "public/chindow"),
-    filename: "bundle.js"
+    path: path.resolve(__dirname, "public/build"),
+    filename: "[name].bundle.js"
   },
   module: {
     rules: [
@@ -30,12 +36,23 @@ module.exports = {
         }
       }, {
         test: /\.css?$/,
-        loaders: ["style-loader", "css-loader"]
+        exclude: /public\/chindow\/styles\/?\w*\.css/,
+        use: ExtractTextPlugin.extract({
+          use: 'css-loader'
+        })
+      }, {
+        test: /public\/chindow\/styles\/?\w*\.css$/,
+        use: ['style-loader', 'css-loader']
       }
     ]
   },
   plugins: [
     new UglifyJSPlugin(),
-    new webpack.DefinePlugin(ENV)
+    new webpack.DefinePlugin(ENV),
+    new ExtractTextPlugin('styles.bundle.css'),
+    new OptimizeCssAssetsPlugin({
+      assetNameRegExp: /styles\.bundle\.css$/,
+      cssProcessorOptions: { discardComments: {removeAll: true } }
+    })
   ]
 };

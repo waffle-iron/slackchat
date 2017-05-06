@@ -2,10 +2,11 @@ import { h, Component } from 'preact';
 
 
 class Header extends Component {
-  render () {
+  render (props) {
     return (
       <div class="sc-header">
-        I am the header
+        <img class="sc-header--img" src={props.imageUrl}/>
+        <div class="sc-header--team-name"> {props.teamName} </div>
       </div>
     )
   }

@@ -4,11 +4,13 @@ const moment = require("moment");
 module.exports = {
 
   addAccount(accountInfo, cb) {
-    const accounts = conn.db.collection('accounts');
-    delete accountInfo.ok;
-    accounts.replaceOne({team_id: accountInfo.team_id}, accountInfo, {upsert: true}, (err, result) => {
-      if (err) { return cb(err); }
-      cb(result.ops[0]);
+    return new Promise((resolve, reject) => {
+      const accounts = conn.db.collection('accounts');
+      delete accountInfo.ok;
+      accounts.replaceOne({team_id: accountInfo.team_id}, accountInfo, {upsert: true}, (err, result) => {
+        if (err) { return reject(err); }
+        resolve(result.ops[0]);
+      });
     });
   },
 
