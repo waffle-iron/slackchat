@@ -1,15 +1,16 @@
 const express = require('express');
-const axios = require('axios');
 const router = express.Router();
+const axios = require('axios');
 const models = require('./../models');
 const slackAuth = require('./../services/slackAuth');
-const path = require('path');
-const fs = require('fs');
 const querystring = require('querystring');
 const SLACK_API_URL = 'https://slack.com/api';
+const dasboardController = require('./dashboard');
+const api = require('./api');
 
+router.use('/', dasboardController);
+router.use('/api', api);
 
-const rawBundle = fs.readFileSync(path.join(__dirname, '../public', 'chindow', 'bundle.js'));
 
 router.get('/', (req, res) => {
   if (req.query.code) {
@@ -17,9 +18,6 @@ router.get('/', (req, res) => {
       .getAccessToken(req.query.code)
       .then(response => {
         if (response.data.ok === true) {
-
-          console.log(response.data);
-
           const token = response.data.access_token;
           axios.post(`${SLACK_API_URL}/team.info`, querystring.stringify({ token }))
             .then(({ data }) => {
@@ -35,66 +33,6 @@ router.get('/', (req, res) => {
   } else {
     res.render('index.ejs' );
   }
-});
-
-router.get('/:team_id/dashboard/analytics', (req, res) => {
-  const team_id = req.params.team_id;
-  models.getAccount({ team_id }, account => {
-    if (!account) {return res.sendStatus(404);}
-    res.render('dashboard/analytics', account);
-  });
-});
-
-router.get('/:team_id/dashboard/widget', (req, res) => {
-  const team_id = req.params.team_id;
-  models.getAccount({ team_id }, account => {
-    if (!account) {return res.sendStatus(404);}
-    res.render('dashboard/widget', account);
-  });
-});
-
-router.get('/:team_id/dashboard/settings', (req, res) => {
-  const team_id = req.params.team_id;
-  models.getAccount({ team_id }, account => {
-    if (!account) {return res.sendStatus(404);}
-    res.render('dashboard/settings', account);
-  });
-});
-
-router.get('/accounts', (req, res) => {
-  models.getAccounts(accounts => {
-    res.send(accounts);
-  });
-});
-
-router.get('/accounts/:team_id', (req, res) => {
-  const team_id = req.params.team_id;
-  models.getAccount({ team_id }, account => {
-    res.render('account', account);
-  });
-});
-
-router.get('/embed/:team_id/', (req, res) => {
-  const team_id = req.params.team_id;
-  const config = { team_id };
-
-  models.getAccount({ team_id }, account => {
-    res.send(`window.SlackChat = {
-      teamId: '${team_id}',
-      teamName: '${account.team_name}',
-      imageUrl: '${account.icon.image_34}'
-    }; ${rawBundle}`);
-  });
-
-});
-
-// ------------- SIGNOUT -------------
-router.get('/signout', (req, res) => {
-  slackAuth
-    .signOut(req.query.token)
-    .then(response => {
-      res.redirect('/');
-    })
 });
 
 module.exports = router;
