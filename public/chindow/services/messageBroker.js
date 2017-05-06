@@ -34,7 +34,7 @@ const messageBroker = {
   },
 
   getVisitorId() {
-    return localStorage.getItem('visitorId');
+    return localStorage.getItem('SLACKCHAT.VISITOR_ID');
   },
 
   getTeamId() {
@@ -50,7 +50,7 @@ const messageBroker = {
   },
 
   setVisitorId(data) {
-    localStorage.setItem('visitorId', data.visitorId);
+    localStorage.setItem('SLACKCHAT.VISITOR_ID', data.visitorId);
   }
 };
 

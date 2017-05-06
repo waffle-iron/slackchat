@@ -6,14 +6,20 @@ const slackAuth = require('./../services/slackAuth');
 const querystring = require('querystring');
 const SLACK_API_URL = 'https://slack.com/api';
 const dasboardController = require('./dashboard');
-const api = require('./api');
+const apiController = require('./api');
+const authController = require('./auth');
+
 
 router.use('/', dasboardController);
-router.use('/api', api);
+router.use('/api', apiController);
+router.use('/auth', authController);
 
 
 router.get('/', (req, res) => {
-  if (req.query.code) {
+
+  if (req.session.teamId) {
+    res.redirect(`/${req.session.teamId}/dashboard/analytics`);
+  } else if (req.query.code) {
     slackAuth
       .getAccessToken(req.query.code)
       .then(response => {
@@ -24,8 +30,11 @@ router.get('/', (req, res) => {
               const account = Object.assign({}, response.data, {icon: data.team.icon});
               models.addAccount(account).then(() => {
                 // the response is structured differently for login vs signup
-                const team_id = response.data.team_id || response.data.team.id;
-                res.redirect(`/${team_id}/dashboard/analytics`);
+                const teamId = response.data.team_id || response.data.team.id;
+                req.session.teamId = teamId;
+                req.session.save(() => {
+                  res.redirect(`/${teamId}/dashboard/analytics`);
+                });
               });
             });
         }
