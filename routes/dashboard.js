@@ -13,7 +13,7 @@ const hasActiveSession = (req, res, next) => {
 
 router.get('/:team_id/dashboard/analytics', hasActiveSession, (req, res) => {
   const team_id = req.params.team_id;
-  models.getAccount({ team_id }, account => {
+  models.getAccount({ team_id }).then((account) => {
     if (!account) {return res.sendStatus(404);}
     res.render('dashboard/analytics', account);
   });

@@ -53,6 +53,7 @@ module.exports = {
       sourceMap: true
     }),
     new webpack.DefinePlugin(ENV),
+    new webpack.ProvidePlugin({'fetch': 'imports-loader?this=>global!exports-loader?global.fetch!whatwg-fetch'}),
     new ExtractTextPlugin('styles.bundle.css'),
     new OptimizeCssAssetsPlugin({
       assetNameRegExp: /styles\.bundle\.css$/,

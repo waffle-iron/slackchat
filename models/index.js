@@ -44,14 +44,17 @@ module.exports = {
     const accounts = conn.db.collection('accounts');
     const today = Number(moment(new Date()).format("YYYYMMDD"));
 
-    accounts.update({team_id: "T2S3395SA", "visitorData.date": today},  {$inc:{"visitorData.$.numVisitors":1}}, (err, docs) => {
-      if (err) { return cb(err); }
-      else if (err === null && docs.result.nModified === 0) {
-        accounts.update({team_id: 'T2S3395SA'}, { "$push": { "visitorData": { "date": today, "numVisitors": 1 }}}, (err, docs) => {
-          if (err) { console.log(err); }
-        });
-      }
-    })
+    return new Promise((resolve, reject) => {
+      accounts.update({team_id, "visitorData.date": today},  {$inc:{"visitorData.$.numVisitors": 1}}, (err, docs) => {
+        if (err) { return reject(err); }
+        else if (docs.result.nModified > 0) { return resolve(docs) }
+        else {
+          accounts.update({team_id}, { "$push": { "visitorData": { "date": today, "numVisitors": 1 }}}, (err, docs) => {
+            resolve(docs);
+          });
+        }
+      })
+    });
 
   }
 

@@ -11,7 +11,7 @@ router.get('/:team_id/', (req, res) => {
   const team_id = req.params.team_id;
   const config = { team_id };
 
-  models.getAccount({ team_id }, account => {
+  models.getAccount({ team_id }).then((account) => {
     if (account) {
       res.send(`window.SlackChat = {
         teamId: '${team_id}',

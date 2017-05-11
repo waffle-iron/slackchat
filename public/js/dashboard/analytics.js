@@ -1,7 +1,6 @@
 import getVisitorData from './api';
 import Chart from 'chart.js'
 
-
 function createChart(visitorData) {
     const chart = document.getElementById("myChart");
     console.log(chart)
