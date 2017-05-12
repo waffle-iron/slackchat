@@ -9,7 +9,7 @@ const slackAuth = require('./services/slackAuth');
 const helpers = require('express-helpers');
 const connectDb = require('./services/connections').connect;
 const routes = require('./routes');
-const model = require('./models');
+const Account = require('./models/Account');
 const session = require('express-session');
 const redis = require("redis");
 const RedisStore = require('connect-redis')(session);
@@ -40,15 +40,19 @@ app.use(express.static(__dirname + '/public'));
 app.use(routes);
 
 
-connectDb().then(db => {
-  if (!db) { return console.log("Database not connected"); }
-
-  model.getBotTokens(botTokens => {
+connectDb().then(()=> {
+  Account.find().distinct('bot.bot_access_token').exec().then(botTokens => {
     initMessaging(io, botTokens);
     server.listen(PORT, () => {
       console.log(`App listening at http://127.0.0.1:${PORT}`)
     });
   });
 
-});
+},
+  err => {
+    if (err) {
+      console.log("Database not connected");
+    }
+  }
+);
 
