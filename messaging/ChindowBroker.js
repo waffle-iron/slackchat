@@ -1,10 +1,9 @@
 const crypto = require('crypto');
 const redis = require("redis");
 const MESSAGE_TYPES = require('./messageTypes');
-const models = require('../models');
 const CLIENT = MESSAGE_TYPES.CLIENT;
 const BROKER = MESSAGE_TYPES.BROKER;
-var mainSocket;
+const Conversation = require('../models/Conversation');
 
 
 class ChindowBroker {
@@ -12,7 +11,6 @@ class ChindowBroker {
   constructor(io) {
     this.sub = redis.createClient();
     this.pub = redis.createClient();
-    this.visitors = redis.createClient();
     this.sockets = {};
     this.sub.on("message", this.onChannelMessage.bind(this));
     this.sub.subscribe("from:slack");
@@ -43,15 +41,13 @@ class ChindowBroker {
     const message = { type: "new_visitor", visitorId, teamId };
     this.pub.publish("from:chindow", JSON.stringify(message));
     this.sockets[visitorId] = socket;
-    models.incrementVisitorCount(teamId);
   }
 
   onChindowMessage(socket, message) {
     message.author = 'them';
     if (message.visitorId) {
-      this.visitors.hget("uui_to_channel_id", message.visitorId, (err, channelId) => {
-        if (err) { return err; }
-        message.channelId = channelId;
+      Conversation.findOne({ visitorId: message.visitorId  }).exec().then(result => {
+        message.channelId = result.channelId;
         message = { type: "text", data: message };
         this.pub.publish("from:chindow", JSON.stringify(message));
       });

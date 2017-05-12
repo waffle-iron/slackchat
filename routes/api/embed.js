@@ -1,5 +1,5 @@
 const express = require('express');
-const models = require('./../../models');
+const Account = require('./../../models/Account');
 const router = express.Router();
 const path = require('path');
 const fs = require('fs');
@@ -11,7 +11,7 @@ router.get('/:team_id/', (req, res) => {
   const team_id = req.params.team_id;
   const config = { team_id };
 
-  models.getAccount({ team_id }).then((account) => {
+  Account.findOne({ team_id }).exec().then((account) => {
     if (account) {
       res.send(`window.SlackChat = {
         teamId: '${team_id}',

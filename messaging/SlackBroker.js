@@ -6,7 +6,8 @@ const RtmClient = require('@slack/client').RtmClient;
 const io = require('socket.io-client');
 const SLACK_API_URL = 'https://slack.com/api';
 const Moniker = require('moniker');
-const models = require('../models');
+const Conversation = require('../models/Conversation');
+const Account = require('../models/Account');
 
 
 class SlackBroker {
@@ -14,7 +15,6 @@ class SlackBroker {
   constructor({ botToken }) {
     this.sub = redis.createClient();
     this.pub = redis.createClient();
-    this.visitors = redis.createClient();
     this.channelIds = {};
     this.sub.on("message", this.onChannelMessage.bind(this));
     this.sub.subscribe("from:chindow");
@@ -49,11 +49,11 @@ class SlackBroker {
   onSlackMessage(message) {
     message = JSON.parse(message);
     if (message.text && message.channel && !message.bot_id) {
-      this.visitors.hget("channel_id_to_uui", message.channel, (err, visitorId) => {
-        message.visitorId = visitorId;
+      Conversation.findOne({ channelId: message.channel }).exec().then(result => {
+        message.visitorId = result.visitorId;
         message = { type: "text", data: message };
         this.pub.publish("from:slack", JSON.stringify(message));
-      });
+      })
     }
   }
 
@@ -63,7 +63,7 @@ class SlackBroker {
       this.handleTextMessage(message);
     } else if (message.type === "new_visitor") {
       const channelName = Moniker.choose();
-      this.createChannel(channelName, message.visitorId, message.teamId);
+      this.createChannel(channelName, message.visitorId, message.teamId)
     }
   }
   
@@ -71,7 +71,7 @@ class SlackBroker {
     const slackChannelId = message.data.channelId;
     if (slackChannelId) {
       const team_id = message.data.teamId;
-      models.getAccount({team_id}).then(account => {
+      Account.findOne({team_id}).exec().then(account => {
 
         return axios.post(`${SLACK_API_URL}/chat.postMessage`, 
             querystring.stringify({
@@ -99,7 +99,7 @@ class SlackBroker {
   }
 
   createChannel(name, visitorId, team_id) {
-    models.getAccount({team_id}).then(account => {
+    return Account.findOne({team_id}).exec().then(account => {
       if (!account) { return false; }
 
       const token = account.access_token;
@@ -111,9 +111,12 @@ class SlackBroker {
               const channelId = response.data.channel.id;
               return this.addToChannel({token, channelId, botId})
             }
-          }).then(channelId => {
-              this.visitors.hset("uui_to_channel_id", visitorId, channelId, redis.print);
-              this.visitors.hset("channel_id_to_uui", channelId, visitorId, redis.print);
+          })
+          .then(channelId => {
+            return new Conversation({ 
+                  visitorId, 
+                  channelId 
+                }).save(); 
           });
     });
   }
