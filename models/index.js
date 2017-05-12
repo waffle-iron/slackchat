@@ -3,7 +3,7 @@ const moment = require("moment");
 
 module.exports = {
 
-  addAccount(accountInfo, cb) {
+  addAccount(accountInfo) {
     return new Promise((resolve, reject) => {
       const accounts = conn.db.collection('accounts');
       delete accountInfo.ok;
@@ -22,11 +22,13 @@ module.exports = {
     });
   },
 
-  getAccount({team_id}, cb) {
-    const accounts = conn.db.collection('accounts');
-    accounts.find({team_id}).toArray((err, docs) => {
-      if (err) { return cb(err); }
-      cb(docs[0]);
+  getAccount({ team_id }) {
+    return new Promise((resolve, reject) => {
+      const accounts = conn.db.collection('accounts');
+      accounts.find({team_id}).toArray((err, docs) => {
+        if (err) { return reject(err); }
+        resolve(docs[0]);
+      });
     });
   },
 
@@ -42,12 +44,17 @@ module.exports = {
     const accounts = conn.db.collection('accounts');
     const today = Number(moment(new Date()).format("YYYYMMDD"));
 
-    accounts.update({team_id: "T2S3395SA", "visitorData.date": today},  {$inc:{"visitorData.$.numVisitors":1}}, (err, docs) => {
-      if (err) { return cb(err); }
-      else if (err === null && docs.result.nModified === 0) {
-        accounts.update({team_id: 'T2S3395SA'}, { "$push": { "visitorData": { "date": today, "numVisitors": 1 }}}, (err, docs) => { cb(err, docs); });
-      }
-    })
+    return new Promise((resolve, reject) => {
+      accounts.update({team_id, "visitorData.date": today},  {$inc:{"visitorData.$.numVisitors": 1}}, (err, docs) => {
+        if (err) { return reject(err); }
+        else if (docs.result.nModified > 0) { return resolve(docs) }
+        else {
+          accounts.update({team_id}, { "$push": { "visitorData": { "date": today, "numVisitors": 1 }}}, (err, docs) => {
+            resolve(docs);
+          });
+        }
+      })
+    });
 
   }
 

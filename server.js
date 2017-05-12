@@ -11,9 +11,14 @@ const connectDb = require('./services/connections').connect;
 const routes = require('./routes');
 const model = require('./models');
 const session = require('express-session');
+const redis = require("redis");
+const RedisStore = require('connect-redis')(session);
 
 
 app.use(session({
+  store: new RedisStore({
+    client: redis.createClient()
+  }),
   secret: 'keyboard cat',
   resave: true,
   saveUninitialized: true,
@@ -21,6 +26,7 @@ app.use(session({
     return crypto.randomBytes(48).toString('base64');
   }
 }));
+
 
 // set the view engine to ejs
 helpers(app);

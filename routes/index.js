@@ -18,6 +18,7 @@ router.use('/auth', authController);
 router.get('/', (req, res) => {
 
   if (req.session.teamId) {
+    console.log('if teamID ' + req.session.teamId)
     res.redirect(`/${req.session.teamId}/dashboard/analytics`);
   } else if (req.query.code) {
     slackAuth
@@ -32,6 +33,7 @@ router.get('/', (req, res) => {
                 // the response is structured differently for login vs signup
                 const teamId = response.data.team_id || response.data.team.id;
                 req.session.teamId = teamId;
+                console.log('teamID ' + teamId)
                 req.session.save(() => {
                   res.redirect(`/${teamId}/dashboard/analytics`);
                 });
@@ -69,28 +71,10 @@ router.get('/:team_id/dashboard/settings', (req, res) => {
 });
 
 
-router.get('/api/accounts', (req, res) => {
-  models.getAccounts(accounts => {
-    models.incrementVisitorCount({team_id:'sdfdsf'}, ()=> {
-      console.log('hahaaaaa');
-      
-    });
-    res.send(accounts);
-  });
-});
-
 router.get('/accounts/:team_id', (req, res) => {
   const team_id = req.params.team_id;
   models.getAccount({ team_id }, account => {
-    // res.send(account);
     res.render('account', account);
-  });
-});
-
-router.get('/api/accounts/:team_id', (req, res) => {
-  const team_id = req.params.team_id;
-  models.getAccount({ team_id }, account => {
-    res.send(account);
   });
 });
 
@@ -99,6 +83,15 @@ router.get('/embed/:team_id/', (req, res) => {
   const config = { team_id };
   res.send(`window.SlackChat = {teamId: '${team_id}'}; ${rawBundle}`);
 });
+
+// route for testing only. TODO: delete later
+router.get('/increment_visitors/:team_id', (req, res) => {
+  const team_id = req.params.team_id;
+  models.incrementVisitorCount({ team_id }).then((result) => {
+    res.send(result)
+  });
+});
+
 
 
 // ------------- SIGNOUT -------------

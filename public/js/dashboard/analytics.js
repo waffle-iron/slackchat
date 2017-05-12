@@ -1,10 +1,9 @@
 import getVisitorData from './api';
 import Chart from 'chart.js'
 
-
 function createChart(visitorData) {
     const chart = document.getElementById("myChart");
-    console.log(chart)
+
     if (!chart) { return; }
     const ctx = chart.getContext('2d');
 
@@ -78,5 +77,5 @@ function createChart(visitorData) {
 }
 
 getVisitorData().then((visitorData) => {
-    createChart(visitorData);
+    createChart(visitorData || []);
 })
