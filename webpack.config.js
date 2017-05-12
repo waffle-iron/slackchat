@@ -7,8 +7,7 @@ const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 let ENV = {
   'process.env': {
-    'NODE_ENV': JSON.stringify(process.env.NODE_ENV) || 'development',
-    'development': true,
+    'NODE_ENV': JSON.stringify(process.env.NODE_ENV),
     'SC_SOCKET_URL': JSON.stringify('http://localhost:9090')
   }
 }
@@ -53,7 +52,6 @@ module.exports = {
       sourceMap: true
     }),
     new webpack.DefinePlugin(ENV),
-    new webpack.ProvidePlugin({'fetch': 'imports-loader?this=>global!exports-loader?global.fetch!whatwg-fetch'}),
     new ExtractTextPlugin('styles.bundle.css'),
     new OptimizeCssAssetsPlugin({
       assetNameRegExp: /styles\.bundle\.css$/,

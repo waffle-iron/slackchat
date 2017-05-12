@@ -71,8 +71,8 @@ class SlackBroker {
     const slackChannelId = message.data.channelId;
     if (slackChannelId) {
       const team_id = message.data.teamId;
-      models.getAccount({team_id}, account => {
-         
+      models.getAccount({team_id}).then(account => {
+
         return axios.post(`${SLACK_API_URL}/chat.postMessage`, 
             querystring.stringify({
               token: account.access_token, 
@@ -99,7 +99,7 @@ class SlackBroker {
   }
 
   createChannel(name, visitorId, team_id) {
-    models.getAccount({team_id}, account => {
+    models.getAccount({team_id}).then(account => {
       if (!account) { return false; }
 
       const token = account.access_token;
