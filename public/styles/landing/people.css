@@ -1,0 +1,49 @@
+.sc-landing-people {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 75px;
+}
+
+.sc-landing-people--title {
+  font-weight: 600;
+  font-size: 24px;
+  text-align: center;
+}
+
+.sc-landing-people--quotes {
+  display: flex;
+  justify-content: space-between;
+}
+
+.sc-landing-people--quote {
+  width: 30%;
+}
+
+.sc-landing-people--quote-img {
+  width: 100px;
+  height: 100px;
+  margin: auto;
+  display: block;
+}
+
+.sc-landing-people--quote-text {
+  width: 250px;
+  display: block;
+  margin: auto;
+}
+
+@media (max-width: 600px) {
+  .sc-landing-people--quotes {
+    flex-direction: column;
+  }
+  .sc-landing-people--quote {
+    align-self: center;
+  }
+  .sc-landing-people--quote-text {
+    text-align: center;
+  }
+  .sc-landing-people--quote {
+    width: 100%;
+    margin-top: 40px;
+  }
+}
