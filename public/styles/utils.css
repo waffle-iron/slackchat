@@ -2,3 +2,9 @@
   max-width: 1000px;
   margin: auto;
 }
+
+@media (max-width: 600px) {
+  .sc-container {
+    width: 100%;
+  }
+}

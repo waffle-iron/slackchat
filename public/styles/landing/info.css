@@ -1,0 +1,38 @@
+.sc-landing--info {
+  display: flex;
+  justify-content: space-between;
+  width: 80%;
+  margin: auto;
+}
+
+.sc-landing--info-section {
+  width: 40%;
+  text-align: center;
+}
+
+.sc-landing--info-plus-img {
+  width: 40px;
+}
+
+.sc-landing--info-section-title {
+  font-size: 22px;
+  font-weight: 600;
+  margin: auto;
+}
+
+.sc-landing--info-section-content {
+  margin-top: 20px;
+}
+
+@media (max-width: 600px) {
+  .sc-landing--info {
+    flex-direction: column;
+  }
+  .sc-landing--info-section {
+    width: 100%;
+  }
+  .sc-landing--info-plus-img {
+    align-self: center;
+    margin: 20px 0px;
+  }
+}

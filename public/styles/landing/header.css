@@ -21,11 +21,20 @@
   align-self: center;
 }
 
+.sc-landing--nav .sc-landing--nav-item:not(.login):hover {
+  color: var(--blue-2);
+}
+
 .sc-landing--nav .sc-landing--nav-item.login {
   box-shadow: 0px 1px 10px rgba(28, 35, 118, 0.24);
   border-radius: 5px;
   padding: 7px 10px;
   display: flex;
+}
+
+.sc-landing--nav .sc-landing--nav-item.login:hover {
+  box-shadow: 0px 1px 10px rgba(28, 35, 125, 0.24);
+  transform: scale(1.02);
 }
 
 .sc-landing--nav .sc-landing--nav-item.login img {
@@ -50,4 +59,15 @@
 .sc-landing--logo img {
   width: 40px;
   max-height: 40px;
+}
+
+@media (max-width: 600px) {
+  .sc-landing--header {
+    width: 80%;
+    margin: auto;
+    margin-bottom: 40px;
+  }
+  .sc-landing--nav-item:not(.login) {
+    display: none;
+  }
 }

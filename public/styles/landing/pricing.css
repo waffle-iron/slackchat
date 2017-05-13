@@ -1,0 +1,79 @@
+.sc-landing-pricing {
+  margin-top: 100px;
+}
+
+.sc-landing-pricing--title {
+  font-weight: 600;
+  font-size: 24px;
+  text-align: center;
+}
+
+.sc-landing-pricing--subheader {
+  text-align: center;
+}
+
+.sc-landing-pricing--plans {
+  margin-top: 60px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.sc-landing-pricing--plan {
+  width: 330px;
+  box-shadow: 0px 1px 10px rgba(28, 35, 118, 0.24);
+  border-radius: 8px;
+}
+
+.sc-landing-pricing--plan-header {
+  height: 90px;
+  background: #2CCEFF;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.sc-landing-pricing--plan-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: white;
+  text-align: center;
+}
+
+.sc-landing-pricing--plan-subheader {
+  font-size: 12px;
+  text-align: center;
+}
+
+.sc-landing-pricing--plan-price {
+  font-size: 24px;
+  text-align: center;
+  font-weight: 600;
+  margin: 30px 0px;
+}
+
+.sc-landing-pricing--plan-points {
+  width: 230px;
+  margin: auto;
+  display: block;
+}
+
+.sc-landing-pricing--plan-button-wrapper {
+  display: flex;
+  width: 100%;
+  padding: 40px;
+}
+
+.sc-landing-pricing--plan-button {
+  padding: 12px;
+  color: white;
+  font-weight: 600;
+  font-size: 16px;
+  display: inline-block;
+  margin: auto;
+  border-radius: 8px;
+  background: #2CCEFF;
+  box-shadow: 0px 1px 10px rgba(28, 35, 118, 0.24);
+  cursor: pointer;
+}

@@ -5,10 +5,11 @@
 }
 
 .sc-landing--fat-divider {
-  background: #F0F4FA;
+  background: var(--blue-3);
   width: 100%;
   height: 65px;
   margin-top: -65px;
+  margin-bottom: 100px;
 }
 
 .sc-landing-hero--button-wrapper {
@@ -73,5 +74,10 @@
   }
   .sc-landing-hero--img img {
     width: 100%;
+  }
+  .sc-landing-hero--info {
+    width: 80%;
+    margin: auto;
+    margin-bottom: 20px;
   }
 }
