@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-4102.149 -4311.613 38.66 46">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #f0f4fa;
+      }
+
+      .cls-2 {
+        fill: #c6d2e8;
+        font-size: 34px;
+        font-family: FaktSoftPro-Medium, Fakt Soft Pro;
+        font-weight: 500;
+      }
+    </style>
+  </defs>
+  <g id="Group_1084" data-name="Group 1084" transform="translate(-4723 -4975)">
+    <g id="Group_1003" data-name="Group 1003" transform="translate(620.851 669.912)">
+      <rect id="Rectangle_813" data-name="Rectangle 813" class="cls-1" width="38.66" height="38.66" rx="3" transform="translate(0 0)"/>
+      <text id="_" data-name="+" class="cls-2" transform="translate(8.991 28.475)"><tspan x="0" y="0">+</tspan></text>
+    </g>
+  </g>
+</svg>

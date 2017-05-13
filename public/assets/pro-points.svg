@@ -1,0 +1,110 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="-3951 -3765.086 238.779 171.299">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+        stroke: #c6d2e8;
+        stroke-width: 2px;
+        opacity: 0.287;
+      }
+
+      .cls-2 {
+        fill: #78e6fa;
+      }
+
+      .cls-3 {
+        fill: #ffd25c;
+      }
+
+      .cls-4 {
+        fill: #f86ba6;
+      }
+
+      .cls-5, .cls-7 {
+        fill: #496483;
+        font-family: AvenirNext-Regular, Avenir Next;
+      }
+
+      .cls-5, .cls-6 {
+        font-size: 16px;
+      }
+
+      .cls-6 {
+        fill: #4e8cff;
+        font-family: AvenirNext-Medium, Avenir Next;
+        font-weight: 500;
+      }
+
+      .cls-7 {
+        font-weight: 400;
+      }
+
+      .cls-8 {
+        fill: #4fe0b4;
+      }
+
+      .cls-9 {
+        filter: url(#Ellipse_353);
+      }
+
+      .cls-10 {
+        filter: url(#Ellipse_352);
+      }
+
+      .cls-11 {
+        filter: url(#Ellipse_351);
+      }
+
+      .cls-12 {
+        filter: url(#Ellipse_350);
+      }
+    </style>
+    <filter id="Ellipse_350" x="-3951" y="-3765.086" width="29.591" height="29.591" filterUnits="userSpaceOnUse">
+      <feOffset input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feFlood flood-color="#57f2ff" flood-opacity="0.82"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="Ellipse_351" x="-3951" y="-3717.732" width="29.591" height="29.591" filterUnits="userSpaceOnUse">
+      <feOffset input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur-2"/>
+      <feFlood flood-color="#ffd25c" flood-opacity="0.871"/>
+      <feComposite operator="in" in2="blur-2"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="Ellipse_352" x="-3951" y="-3670.378" width="29.591" height="29.591" filterUnits="userSpaceOnUse">
+      <feOffset input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur-3"/>
+      <feFlood flood-color="#f86ba6" flood-opacity="0.8"/>
+      <feComposite operator="in" in2="blur-3"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="Ellipse_353" x="-3951" y="-3623.378" width="29.591" height="29.591" filterUnits="userSpaceOnUse">
+      <feOffset input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur-4"/>
+      <feFlood flood-color="#4fe0b4" flood-opacity="0.8"/>
+      <feComposite operator="in" in2="blur-4"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="pro-points" transform="translate(-4723 -4975)">
+    <line id="Line_119" data-name="Line 119" class="cls-1" y2="137.791" transform="translate(786.795 1226.709)"/>
+    <g class="cls-12" transform="matrix(1, 0, 0, 1, 4723, 4975)">
+      <ellipse id="Ellipse_350-2" data-name="Ellipse 350" class="cls-2" cx="5.795" cy="5.795" rx="5.795" ry="5.795" transform="translate(-3942 -3756.09)"/>
+    </g>
+    <g class="cls-11" transform="matrix(1, 0, 0, 1, 4723, 4975)">
+      <ellipse id="Ellipse_351-2" data-name="Ellipse 351" class="cls-3" cx="5.795" cy="5.795" rx="5.795" ry="5.795" transform="translate(-3942 -3708.73)"/>
+    </g>
+    <g class="cls-10" transform="matrix(1, 0, 0, 1, 4723, 4975)">
+      <ellipse id="Ellipse_352-2" data-name="Ellipse 352" class="cls-4" cx="5.795" cy="5.795" rx="5.795" ry="5.795" transform="translate(-3942 -3661.38)"/>
+    </g>
+    <text id="Seamless_Slack_integration" data-name="Seamless Slack integration" class="cls-5" transform="translate(816.78 1229.394)"><tspan x="0" y="0">Seamless Slack integration</tspan></text>
+    <text id="Unlimited_monthly_chats" data-name="Unlimited monthly chats" class="cls-6" transform="translate(816.78 1324.103)"><tspan x="0" y="0">Unlimited</tspan><tspan class="cls-7" y="0" xml:space="preserve"> monthly chats</tspan></text>
+    <text id="Usage_metrics_analytics" data-name="Usage metrics &amp; analytics" class="cls-5" transform="translate(816.78 1276.748)"><tspan x="0" y="0">Usage metrics &amp; analytics</tspan></text>
+    <g class="cls-9" transform="matrix(1, 0, 0, 1, 4723, 4975)">
+      <ellipse id="Ellipse_353-2" data-name="Ellipse 353" class="cls-8" cx="5.795" cy="5.795" rx="5.795" ry="5.795" transform="translate(-3942 -3614.38)"/>
+    </g>
+    <text id="Beautiful_on_every_site" data-name="Beautiful on every site" class="cls-5" transform="translate(816.78 1371.103)"><tspan x="0" y="0">Beautiful on every site</tspan></text>
+  </g>
+</svg>

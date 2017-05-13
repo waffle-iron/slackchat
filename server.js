@@ -39,7 +39,6 @@ app.use(function(req, res, next) {
 app.use(express.static(__dirname + '/public'));
 app.use(routes);
 
-
 connectDb().then(()=> {
   Account.find().distinct('bot.bot_access_token').exec().then(botTokens => {
     initMessaging(io, botTokens);
@@ -55,4 +54,3 @@ connectDb().then(()=> {
     }
   }
 );
-

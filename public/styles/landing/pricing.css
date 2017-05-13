@@ -1,0 +1,173 @@
+.sc-landing-pricing {
+  margin-top: 100px;
+}
+
+.sc-landing-pricing--title {
+  font-weight: 600;
+  font-size: 24px;
+  text-align: center;
+}
+
+.sc-landing-pricing--subheader {
+  text-align: center;
+}
+
+.sc-landing-pricing--plans {
+  margin-top: 60px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.sc-landing-pricing--plan {
+  width: 330px;
+  box-shadow: 0px 1px 10px rgba(28, 35, 118, 0.24);
+  border-radius: 8px;
+}
+
+.sc-landing-pricing--plan-header {
+  height: 90px;
+  background: linear-gradient( to bottom, #2CCEFF, #4E8CFF);
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.pro .sc-landing-pricing--plan-header {
+  background: linear-gradient( 180deg, #4E8CFF, #8681FF );
+}
+
+.sc-landing-pricing--plan-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: white;
+  text-align: center;
+}
+
+.sc-landing-pricing--plan-subheader {
+  font-size: 12px;
+  text-align: center;
+}
+
+.pro .sc-landing-pricing--plan-subheader {
+  color: white;
+}
+
+.sc-landing-pricing--plan-price {
+  font-size: 24px;
+  text-align: center;
+  font-weight: 600;
+  margin: 30px 0px;
+}
+
+.sc-landing-pricing--plan-points {
+  width: 230px;
+  margin: auto;
+  display: block;
+}
+
+.sc-landing-pricing--plan-button-wrapper {
+  display: flex;
+  width: 100%;
+  padding: 40px;
+}
+
+.sc-landing-pricing--plan-button {
+  padding: 12px;
+  color: white;
+  font-weight: 600;
+  font-size: 16px;
+  display: inline-block;
+  margin: auto;
+  border-radius: 8px;
+  background: linear-gradient( 180deg, #2CCEFF, #4E8CFF);
+  box-shadow: 0px 1px 10px rgba(28, 35, 118, 0.24);
+  cursor: pointer;
+}
+
+.sc-landing-pricing--plan-button:hover {
+  box-shadow: 0px 1px 10px rgba(28, 35, 125, 0.24);
+  transform: scale(1.02);
+}
+
+.pro .sc-landing-pricing--plan-button {
+  background: linear-gradient( 180deg, #4E8CFF, #8681FF );
+}
+
+.sc-landing-pricing--good-points {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 100px;
+}
+
+.sc-landing-pricing--good-point {
+  width: 50%;
+  box-sizing: border-box;
+  padding: 0px 80px;
+  margin-bottom: 100px;
+}
+
+.sc-landing-pricing--good-point-title {
+  font-weight: 600;
+  margin-left: 60px;
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.sc-landing-pricing--good-point-title:after {
+  content: "";
+  position: absolute;
+  height: 10px;
+  width: 10px;
+  left: -40px;
+  top: calc(50% - 5px);
+  border-radius: 50%;
+}
+
+.sc-landing-pricing--good-point-title.blue:after {
+  background: #78E6FA;
+  box-shadow: 0px 1px 10px #78E6FA;
+}
+
+.sc-landing-pricing--good-point-title.yellow:after {
+  background: #FFD25C;
+  box-shadow: 0px 1px 10px #FFD25C;
+}
+
+.sc-landing-pricing--good-point-title.pink:after {
+  background: #F86BA6;
+  box-shadow: 0px 1px 10px #F86BA6;
+}
+
+.sc-landing-pricing--good-point-title.green:after {
+  background: #4FE0B4;
+  box-shadow: 0px 1px 10px #4FE0B4;
+}
+
+@media (max-width: 600px) {
+  .sc-landing-pricing--subheader {
+    margin: auto;
+    width: 80%;
+    margin-top: 20px;
+  }
+  .sc-landing-pricing--plans {
+    flex-direction: column;
+  }
+  .sc-landing-pricing--plan {
+    align-self: center;
+  }
+  .sc-landing-pricing--plan:first-of-type {
+    margin-bottom: 60px;
+  }
+  .sc-landing-pricing--good-point {
+    width: 100%;
+    text-align: center;
+  }
+  .sc-landing-pricing--good-point-title {
+    margin-left: 0px;
+  }
+  .sc-landing-pricing--good-point-title:after {
+    display: none;
+  }
+}
