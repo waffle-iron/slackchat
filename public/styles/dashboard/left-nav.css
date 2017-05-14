@@ -1,0 +1,42 @@
+.sc-left-nav {
+  max-width: 200px;
+  height: 100%;
+  font-size: 15px;
+  margin-right: 60px;
+}
+
+.sc-left-nav .ch-horz-divider {
+  width: 60%;
+}
+
+.sc-left-nav-item {
+  display: flex;
+  padding: 10px;
+  margin: 20px 0px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.sc-left-nav-item:first-of-type {
+  margin-top: 0;
+}
+
+.sc-left-nav-item--img {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+}
+
+.sc-left-nav-item--text {
+  color: var(--blue-1);
+}
+
+.sc-left-nav-item:hover .sc-left-nav-item--text {
+  color: #2C8EFF;
+}
+
+@media (max-width: 600px) {
+  .sc-left-nav-item--text {
+    display: none;
+  }
+}

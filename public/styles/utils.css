@@ -3,6 +3,11 @@
   margin: auto;
 }
 
+.sc-horz-divider {
+  height: 2px;
+  background: var(--blue-3);
+}
+
 @media (max-width: 600px) {
   .sc-container {
     width: 100%;
