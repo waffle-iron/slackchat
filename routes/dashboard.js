@@ -35,4 +35,12 @@ router.get('/:team_id/dashboard/settings', hasActiveSession, (req, res) => {
   });
 });
 
+router.get('/:team_id/dashboard/payments', hasActiveSession, (req, res) => {
+  const team_id = req.params.team_id;
+  Account.findOne({ team_id }).exec().then(account => {
+    if (!account) {return res.sendStatus(404);}
+    res.render('dashboard/payments', account);
+  });
+});
+
 module.exports = router;

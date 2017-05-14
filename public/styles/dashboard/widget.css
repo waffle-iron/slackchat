@@ -1,0 +1,37 @@
+.sc-widget-form--header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+
+.sc-widget-title {
+  font-weight: 600;
+  align-self: center;
+}
+
+.sc-widget-button {
+  background: var(--blue-2);
+  color: white;
+  cursor: pointer;
+  padding: 6px 22px;
+  border-radius: 5px;
+  user-select: none;
+}
+
+.sc-widget-button:hover {
+  transform: scale(1.02);
+}
+
+.sc-widget-button:active {
+  transform: none;
+}
+
+.sc-widget-input {
+  width: 500px;
+  box-shadow: 0px 1px 10px rgba(28, 35, 118, 0.24);
+  border-radius: 8px;
+  border: none;
+  padding: 40px 40px;
+  resize: none;
+  color: var(--blue-1);
+}
