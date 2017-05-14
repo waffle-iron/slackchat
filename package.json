@@ -31,7 +31,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon server.js",
     "prestart": "npm run build:prod",
-    "start": "nodemon server.js",
+    "start": "PORT=80 nodemon server.js",
     "build:w": "webpack --progress --watch",
     "build:prod": "NODE_ENV=\"production\" webpack --progress",
     "babel": "babel --watch client/ --out-dir build/"
