@@ -1,0 +1,50 @@
+.sc-settings-form {
+  width: 500px;
+}
+
+.sc-settings-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.sc-settings-sections {
+  display: flex;
+  flex-wrap: wrap;
+  padding-top: 30px;
+  justify-content: space-between;
+}
+
+.sc-settings-section {
+  width: 200px;
+  margin-bottom: 60px;
+  display: flex;
+  flex-direction: column;
+}
+
+.sc-settings-section-title {
+  margin-bottom: 10px;
+}
+
+.sc-settings-domain-input {
+  padding: 5px;
+  border-radius: 5px;
+  border: solid 2px var(--blue-3);
+}
+
+.sc-settings-domain-input:focus {
+  outline: none;
+  border: solid 2px var(--blue-2);
+}
+
+.sc-settings-button {
+  background: var(--blue-2);
+  color: white;
+  cursor: pointer;
+  padding: 6px 22px;
+  border-radius: 5px;
+  user-select: none;
+}
+
+.sc-settings-button:hover {
+  transform: scale(1.02);
+}

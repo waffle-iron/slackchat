@@ -1,0 +1,35 @@
+<div class="sc-dashboard-header">
+  <div class="sc-dashboard-header--brand">
+    <img src="/assets/logo.svg" />
+    <div class="sc-brand-text">slackchat</div>
+  </div>
+
+  <button class="sc-dashboard-header--dropdown">
+    <div class="sc-dashboard-header--upgrade-float">Upgrade!</div>
+    <img class="sc-dashboard-header--avatar-img" src="/assets/user.svg" alt="" />
+
+    <div class="sc-dashboard-dropdown-menu" >
+      <div class="sc-dashboard-dropdown-item">
+        <div class="sc-dashboard-dropdown-item--user">
+          <div class="sc-dashboard-dropdown-username">
+            <div class="sc-dashboard-dropdown-circle"></div>
+            <div class="sc-dashboard-dropdown-username-text">
+              dharness
+            </div>
+          </div>
+          <div class="sc-dashboard-dropdown-email">dharness@kingofthestack.com</div>
+        </div>
+      </div>
+      <div class="sc-horz-divider"></div>
+      <a class="sc-dashboard-dropdown-item link" data-route="/<%= team_id %>/dashboard/settings" >
+        Settings
+      </a>
+      <a class="sc-dashboard-dropdown-item link" data-route="/<%= team_id %>/dashboard/settings" >
+        Upgrade Account
+      </a>
+      <a class="sc-dashboard-dropdown-item link" data-route="/auth/signout">
+        Logout
+      </a>
+    </div>
+  </button>
+</div>

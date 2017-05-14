@@ -1,0 +1,15 @@
+<link rel="stylesheet" href="./../../build/styles.bundle.css">
+<title>SlackChat</title>
+
+<div class="sc-container">
+  <%- include ../header.ejs %>
+  <div class="sc-horz-divider"></div>
+  <%- include ../account-info.ejs %>
+  <div class="sc-horz-divider"></div>
+  <div class="sc-dashboard-content">
+    <%- include ../left-nav.ejs %>
+    <%- include form.ejs %>
+  </div>
+</div>
+
+<script src="./../../build/dashboard.bundle.js" async></script>
