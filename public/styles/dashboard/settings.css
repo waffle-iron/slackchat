@@ -49,6 +49,11 @@
   outline: none;
 }
 
+.sc-settings-button[disabled] {
+  background: var(--blue-3);
+  color: #9C9C9C;
+}
+
 .sc-settings-button:active {
   transform: scale(0.98);
 }
