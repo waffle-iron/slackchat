@@ -26,9 +26,10 @@
 }
 
 .sc-settings-domain-input {
-  padding: 5px;
+  padding: 10px;
   border-radius: 5px;
   border: solid 2px var(--blue-3);
+  font-size: 12px;
 }
 
 .sc-settings-domain-input:focus {
@@ -43,8 +44,11 @@
   padding: 6px 22px;
   border-radius: 5px;
   user-select: none;
+  border: none;
+  font-size: 16px;
+  outline: none;
 }
 
-.sc-settings-button:hover {
-  transform: scale(1.02);
+.sc-settings-button:active {
+  transform: scale(0.98);
 }

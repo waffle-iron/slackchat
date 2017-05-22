@@ -1,6 +1,7 @@
 import './../styles/index';
 import './jscolor.min';
 
+
 // Items in the dropdown are not clickable using hrefs
 // since the menu closes too quickly. Use data-route instead.
 document.querySelectorAll('a[data-route]').forEach((el) => {

@@ -1,29 +1,29 @@
-<div class="sc-settings-form">
+<form class="sc-settings-form" id="sc-settings-form" method="POST" action="/<%= team_id %>/dashboard/settings">
 
   <div class="sc-settings-header">
     <div class="sc-settings-title">Configure Settings</div>
-    <div class="sc-settings-button">Update</div>
+    <button type="submit" class="sc-settings-button" id="sc-update-settings-button">Update</button>
   </div>
 
   <div class="sc-settings-sections">
     <div class="sc-settings-section">
       <div class="sc-settings-section-title">Domain</div>
-      <input class="sc-settings-domain-input"></input>
+      <input class="sc-settings-domain-input" name="domain" value="<%= settings.domain %>"></input>
     </div>
 
     <div class="sc-settings-section">
       <div class="sc-settings-section-title">Display name</div>
-      <input class="sc-settings-domain-input"></input>
+      <input class="sc-settings-domain-input" name="displayName" value="<%= settings.displayName %>"></input>
     </div>
 
     <div class="sc-settings-section">
       <div class="sc-settings-section-title">Email</div>
-      <input class="sc-settings-domain-input"></input>
+      <input class="sc-settings-domain-input" name="email" value="<%= settings.email %>"></input>
     </div>
 
     <div class="sc-settings-section">
       <div class="sc-settings-section-title">Color</div>
-      <input class="sc-settings-domain-input jscolor"></input>
+      <input class="sc-settings-domain-input jscolor" name="headerColor" value="<%= settings.headerColor %>"></input>
     </div>
   </div>
-</div>
+</form>
