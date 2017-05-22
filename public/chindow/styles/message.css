@@ -50,3 +50,9 @@
   background-color: #f4f7f9;
   margin-right: 40px;
 }
+
+@media (max-width: 450px) {
+  .sc-message {
+    width: 80%;
+  }
+}
