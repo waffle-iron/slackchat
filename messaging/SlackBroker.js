@@ -3,12 +3,12 @@ const axios = require('axios');
 const querystring = require('querystring');
 const CLIENT_EVENTS = require('@slack/client').CLIENT_EVENTS;
 const RtmClient = require('@slack/client').RtmClient;
-const io = require('socket.io-client');
-const SLACK_API_URL = 'https://slack.com/api';
 const Moniker = require('moniker');
 const Conversation = require('../models/Conversation');
 const Account = require('../models/Account');
 
+
+const SLACK_API_URL = 'https://slack.com/api';
 
 class SlackBroker {
 
@@ -16,8 +16,8 @@ class SlackBroker {
     this.sub = redis.createClient();
     this.pub = redis.createClient();
     this.channelIds = {};
-    this.sub.on("message", this.onChannelMessage.bind(this));
-    this.sub.subscribe("from:chindow");
+    this.sub.on('message', this.onChannelMessage.bind(this));
+    this.sub.subscribe('from:chindow');
 
 
     this.botToken = botToken;
@@ -30,11 +30,11 @@ class SlackBroker {
   }
 
   getWssUrl({ botToken }) {
-    return axios.post(`${SLACK_API_URL}/rtm.start`, 
+    return axios.post(`${SLACK_API_URL}/rtm.start`,
         querystring
           .stringify({ botToken }))
           .then(res => res.data)
-          .catch(err => console.log(err) );
+          .catch(err => console.log(err));
   }
 
   onStartErr(err) {
@@ -42,44 +42,49 @@ class SlackBroker {
   }
 
   onClientAuthenticated(rtmStartData) {
-    rtmStartData.channels.forEach(channel => this.channelMap[channel.name] = channel.id);
+    rtmStartData.channels.forEach((channel) => {
+      this.channelMap[channel.name] = channel.id;
+    });
     console.log(`Logged in as ${rtmStartData.self.name} of team ${rtmStartData.team.name}, but not yet connected to a channel`);
   }
 
   onSlackMessage(message) {
     message = JSON.parse(message);
     if (message.text && message.channel && !message.bot_id) {
-      Conversation.findOne({ channelId: message.channel }).exec().then(result => {
+      Conversation.findOne({ channelId: message.channel }).exec().then((result) => {
         message.visitorId = result.visitorId;
-        message = { type: "text", data: message };
-        this.pub.publish("from:slack", JSON.stringify(message));
+        message = { type: 'text', data: message };
+        this.pub.publish('from:slack', JSON.stringify(message));
       })
     }
   }
 
-  onChannelMessage(redisChannel, message) {
-    message = JSON.parse(message);
-    if (message.type === "text") {
+  onChannelMessage(redisChannel, channelMessage) {
+    const message = JSON.parse(channelMessage);
+    if (message.type === 'text') {
       this.handleTextMessage(message);
-    } else if (message.type === "new_visitor") {
+    } else if (message.type === 'new_visitor') {
       const channelName = Moniker.choose();
       this.createChannel(channelName, message.visitorId, message.teamId)
     }
   }
-  
+
   handleTextMessage(message) {
     const slackChannelId = message.data.channelId;
     if (slackChannelId) {
-      const team_id = message.data.teamId;
-      Account.findOne({team_id}).exec().then(account => {
+      const { teamId } = message.data;
+      Account.findOne({
+        team_id: teamId,
+        'bot.bot_access_token': this.botToken,
+      }).exec().then((account) => {
 
-        return axios.post(`${SLACK_API_URL}/chat.postMessage`, 
+        return axios.post(`${SLACK_API_URL}/chat.postMessage`,
             querystring.stringify({
-              token: account.access_token, 
+              token: account.access_token,
               channel: slackChannelId,
               text: message.data.body,
-              username: slackChannelId
-            }))
+              username: slackChannelId,
+            }));
       });
     }
   }

@@ -28,6 +28,7 @@
     "preact": "8.1.0",
     "react": "15.5.4",
     "react-dom": "15.5.4",
+    "redis": "2.7.1",
     "socket.io": "2.0.1",
     "style-loader": "0.17.0",
     "styled-components": "1.4.6",

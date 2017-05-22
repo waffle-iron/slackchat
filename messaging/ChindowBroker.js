@@ -1,10 +1,11 @@
 const crypto = require('crypto');
 const redis = require("redis");
 const MESSAGE_TYPES = require('./messageTypes');
-const CLIENT = MESSAGE_TYPES.CLIENT;
-const BROKER = MESSAGE_TYPES.BROKER;
 const Conversation = require('../models/Conversation');
 
+
+const CLIENT = MESSAGE_TYPES.CLIENT;
+const BROKER = MESSAGE_TYPES.BROKER;
 
 class ChindowBroker {
 
@@ -23,9 +24,9 @@ class ChindowBroker {
   }
 
   addEventListeners(socket) {
-    socket.on(CLIENT.RETURNING_VISITOR, (message) => this.onReturningVisitor(socket, message));
-    socket.on(CLIENT.NEW_VISITOR, (message) => this.onNewVisitor(socket, message));
-    socket.on(CLIENT.MESSAGE, (message) => this.onChindowMessage(socket, message) );
+    socket.on(CLIENT.RETURNING_VISITOR, message => this.onReturningVisitor(socket, message));
+    socket.on(CLIENT.NEW_VISITOR, message => this.onNewVisitor(socket, message));
+    socket.on(CLIENT.MESSAGE, message => this.onChindowMessage(socket, message));
   }
 
   onReturningVisitor(socket, message) {
@@ -38,18 +39,23 @@ class ChindowBroker {
     const visitorId = crypto.randomBytes(48).toString('base64');
     socket.emit(BROKER.VISITOR_ID, { visitorId });
 
-    const message = { type: "new_visitor", visitorId, teamId };
-    this.pub.publish("from:chindow", JSON.stringify(message));
+    const message = { type: 'new_visitor', visitorId, teamId };
+    this.pub.publish('from:chindow', JSON.stringify(message));
     this.sockets[visitorId] = socket;
   }
 
   onChindowMessage(socket, message) {
-    message.author = 'them';
     if (message.visitorId) {
-      Conversation.findOne({ visitorId: message.visitorId  }).exec().then(result => {
-        message.channelId = result.channelId;
-        message = { type: "text", data: message };
-        this.pub.publish("from:chindow", JSON.stringify(message));
+      Conversation.findOne({ visitorId: message.visitorId }).exec().then((result) => {
+        const { channelId } = result;
+        const channelMessage = {
+          type: 'text',
+          data: Object.assign({}, message, {
+            channelId,
+            author: 'them',
+          }),
+        };
+        this.pub.publish('from:chindow', JSON.stringify(channelMessage));
       });
     }
   }
