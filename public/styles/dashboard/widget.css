@@ -18,12 +18,8 @@
   user-select: none;
 }
 
-.sc-widget-button:hover {
-  transform: scale(1.02);
-}
-
 .sc-widget-button:active {
-  transform: none;
+  transform: scale(0.95);
 }
 
 .sc-widget-input {
