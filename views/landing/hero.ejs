@@ -6,7 +6,8 @@
       ever leaving <span class="sc-landing-hero--blue-word">Slack</span> <br />
     </div>
     <div class="sc-landing-hero--button-wrapper">
-      <a class="sc-landing-hero--button" href="https://slack.com/oauth/authorize?scope=incoming-webhook,commands,bot&client_id=94105311894.149174096865">
+      <% var href=`https://slack.com/oauth/authorize?redirect_uri=${process.env.SLACK_REDIRECT_URI}&scope=incoming-webhook,commands,bot&client_id=94105311894.149174096865`; %>
+      <a class="sc-landing-hero--button" href='<%= href %>'>
         <img src="assets/slack-logo-blue.svg" alt="" />
         <div class="sc-landing-hero--button-text">
           Get Slackchat free!

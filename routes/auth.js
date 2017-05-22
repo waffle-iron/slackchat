@@ -1,15 +1,16 @@
 const express = require('express');
-const router = express.Router();
 const slackAuth = require('./../services/slackAuth');
 
+
+const router = express.Router();
 
 router.get('/signout', (req, res) => {
   slackAuth
     .signOut(req.query.token)
-    .then(response => {
+    .then(() => {
       req.session.destroy();
       res.redirect('/');
-    })
+    });
 });
 
 module.exports = router;
