@@ -1,6 +1,10 @@
 const express = require('express');
-const router = express.Router();
+const bodyParser = require('body-parser');
 const Account = require('./../models/Account');
+
+
+const router = express.Router();
+router.use(bodyParser.urlencoded({ extended: false }));
 
 const hasActiveSession = (req, res, next) => {
   if (req.session.teamId && req.session.teamId === req.params.team_id) {
@@ -10,36 +14,52 @@ const hasActiveSession = (req, res, next) => {
   }
 };
 
-
 router.get('/:team_id/dashboard/analytics', hasActiveSession, (req, res) => {
-  const team_id = req.params.team_id;
-  Account.findOne({ team_id }).then((account) => {
-    if (!account) {return res.sendStatus(404);}
-    res.render('dashboard/analytics', account);
+  const teamId = req.params.team_id;
+  Account.findOne({ team_id: teamId }).then((account) => {
+    if (!account) { return res.sendStatus(404); }
+    return res.render('dashboard/analytics', account);
   });
 });
 
 router.get('/:team_id/dashboard/widget', hasActiveSession, (req, res) => {
-  const team_id = req.params.team_id;
-  Account.findOne({ team_id }).exec().then(account => {
-    if (!account) {return res.sendStatus(404);}
-    res.render('dashboard/widget', account);
+  const teamId = req.params.team_id;
+  Account.findOne({ team_id: teamId }).exec().then((account) => {
+    if (!account) { return res.sendStatus(404); }
+    return res.render('dashboard/widget', account);
   });
 });
 
 router.get('/:team_id/dashboard/settings', hasActiveSession, (req, res) => {
-  const team_id = req.params.team_id;
-  Account.findOne({ team_id }).exec().then(account => {
-    if (!account) {return res.sendStatus(404);}
-    res.render('dashboard/settings', account);
+  const teamId = req.params.team_id;
+  Account.findOne({ team_id: teamId }).exec().then((account) => {
+    if (!account) { return res.sendStatus(404); }
+    return res.render('dashboard/settings', account);
   });
 });
 
+router.post('/:team_id/dashboard/settings', hasActiveSession, (req, res) => {
+  const teamId = req.params.team_id;
+  const nextSettings = {
+    displayName: req.body.displayName,
+    domain: req.body.domain,
+    email: req.body.email,
+    headerColor: req.body.headerColor,
+  };
+  Account.findOneAndUpdate(
+    { team_id: teamId },
+    { settings: nextSettings },
+    { upsert: false }, (err, account) => {
+      if (err) { return res.send(500); }
+      return res.redirect(`/${account.team_id}/dashboard/settings`);
+    });
+});
+
 router.get('/:team_id/dashboard/payments', hasActiveSession, (req, res) => {
-  const team_id = req.params.team_id;
-  Account.findOne({ team_id }).exec().then(account => {
-    if (!account) {return res.sendStatus(404);}
-    res.render('dashboard/payments', account);
+  const teamId = req.params.team_id;
+  Account.findOne({ team_id: teamId }).exec().then((account) => {
+    if (!account) { return res.sendStatus(404); }
+    return res.render('dashboard/payments', account);
   });
 });
 
