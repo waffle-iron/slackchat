@@ -7,6 +7,7 @@ const SLACK_API_URL = 'https://slack.com/api';
 module.exports = {
 
   getAccessToken(code) {
+    console.log(process.env.SLACK_REDIRECT_URI);
     return axios.post(`${SLACK_API_URL}/oauth.access`,
         querystring.stringify({
           code,

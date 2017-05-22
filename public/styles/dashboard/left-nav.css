@@ -16,6 +16,7 @@
   cursor: pointer;
   text-decoration: none;
   padding-left: 0px;
+  white-space: nowrap;
 }
 
 .sc-left-nav-item:first-of-type {
