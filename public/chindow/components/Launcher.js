@@ -11,21 +11,20 @@ class Launcher extends Component {
 
   handleClick() {
     this.setState({ active: !this.state.active });
-  }  
-  
+  }
 
-  render () {
-    let classList = [
-      "sc-launcher",
-      (this.state.active ? " active" : "")
-    ]
+  render() {
+    const classList = [
+      'sc-launcher',
+      (this.state.active ? ' active' : ''),
+    ];
     return (
       <div>
-        <div class={classList.join(' ')} onClick={this.handleClick.bind(this)} ></div>
-        <ChatWindow active={this.state.active}/>
+        <div className={classList.join(' ')} onClick={this.handleClick.bind(this)} ></div>
+        <ChatWindow active={this.state.active} onClose={this.handleClick.bind(this)} />
       </div>
-    )
+    );
   }
 }
 
-export default Launcher
+export default Launcher;

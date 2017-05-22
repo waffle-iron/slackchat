@@ -1,15 +1,20 @@
 import { h, Component } from 'preact';
+import closeIcon from './../assets/close-icon.png';
 
 
 class Header extends Component {
-  render (props) {
+
+  render(props) {
     return (
-      <div class="sc-header">
-        <img class="sc-header--img" src={props.imageUrl}/>
-        <div class="sc-header--team-name"> {props.teamName} </div>
+      <div className="sc-header">
+        <img className="sc-header--img" src={props.imageUrl} alt="" />
+        <div className="sc-header--team-name"> {props.teamName} </div>
+        <div className="sc-header--close-button" onClick={this.props.onClose}>
+          <img src={closeIcon} alt="" />
+        </div>
       </div>
-    )
+    );
   }
 }
 
-export default Header
+export default Header;
