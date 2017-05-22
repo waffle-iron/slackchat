@@ -52,6 +52,7 @@
 .sc-settings-button[disabled] {
   background: var(--blue-3);
   color: #9C9C9C;
+  cursor: auto;
 }
 
 .sc-settings-button:active {
