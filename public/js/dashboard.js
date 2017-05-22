@@ -18,3 +18,17 @@ if (copyScriptButton) {
     document.execCommand('copy');
   });
 }
+
+const settingsForm = document.querySelector('#sc-settings-form');
+if (settingsForm) {
+  const updateSettingsButton = settingsForm.querySelector('#sc-update-settings-button');
+  const inputs = [...settingsForm.getElementsByTagName('input')];
+  inputs.forEach((el) => {
+    el.addEventListener('change', () => {
+      updateSettingsButton.disabled = false;
+    });
+    el.addEventListener('keyup', () => {
+      updateSettingsButton.disabled = false;
+    });
+  });
+}

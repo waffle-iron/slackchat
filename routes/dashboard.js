@@ -40,15 +40,9 @@ router.get('/:team_id/dashboard/settings', hasActiveSession, (req, res) => {
 
 router.post('/:team_id/dashboard/settings', hasActiveSession, (req, res) => {
   const teamId = req.params.team_id;
-  const nextSettings = {
-    displayName: req.body.displayName,
-    domain: req.body.domain,
-    email: req.body.email,
-    headerColor: req.body.headerColor,
-  };
   Account.findOneAndUpdate(
     { team_id: teamId },
-    { settings: nextSettings },
+    { settings: req.body },
     { upsert: false }, (err, account) => {
       if (err) { return res.send(500); }
       return res.redirect(`/${account.team_id}/dashboard/settings`);
