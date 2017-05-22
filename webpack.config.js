@@ -32,6 +32,10 @@ module.exports = {
         test: /public\/chindow\/styles\/?\w*\.css$/,
         use: ['style-loader', 'css-loader'],
       },
+      {
+        test: /\.(png|woff|woff2|eot|ttf|svg|otf)$/,
+        loader: 'url-loader?limit=100000',
+      },
     ],
   },
   plugins: [
