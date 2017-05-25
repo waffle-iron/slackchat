@@ -3,9 +3,12 @@
     Start using Slackchat today for <i>free!</i>
   </div>
   <div class="sc-landing-plea--button-wrapper">
-    <button class="sc-landing-plea--button">
+    <% var href=`https://slack.com/oauth/authorize?redirect_uri=${process.env.SLACK_REDIRECT_URI}&scope=incoming-webhook,commands,bot&client_id=94105311894.149174096865`; %>
+    <a class="sc-landing-plea--button" href='<%= href %>'>
       <img src="assets/slacklogo.svg" alt="">
-      <div class="sc-landing-plea--button--text">Add to Slack</div>
-    </button>
+      <div class="sc-landing-plea--button--text">
+        Add to Slack
+      </div>
+    </a>
   </div>
 </div>

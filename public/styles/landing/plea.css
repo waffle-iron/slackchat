@@ -17,6 +17,11 @@
   display: inline-block;
   align-self: center;
   margin-left: 20px;
+  text-decoration: none;
+}
+
+.sc-landing-plea--button-wrapper .sc-landing-plea--button--text {
+  text-decoration: none;
 }
 
 .sc-landing-plea--button {
@@ -30,6 +35,7 @@
   color: var(--blue-1);
   font-weight: 600;
   cursor: pointer;
+  text-decoration: none;
 }
 
 .sc-landing-plea--button:hover {
@@ -40,6 +46,8 @@
 .sc-landing-plea--button--text {
   align-self: center;
   margin-top: 3px;
+  text-decoration: none;
+  color: var(--blue-1);
 }
 
 .sc-landing-plea--button img {

@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
+const { addCustomer } = require('./../services/payments');
 
-const Account = mongoose.model('Account', {
+const Schema = mongoose.Schema;
+
+const accountSchema = new Schema({
   access_token: String,
   scope: String,
   user_id: String,
@@ -10,14 +13,16 @@ const Account = mongoose.model('Account', {
     bot_user_id: String,
     bot_access_token: String,
   },
-  icon: {
-    image_34: String,
-    image_44: String,
-    image_68: String,
-    image_88: String,
-    image_10: String,
-    image_13: String,
-    image_23: String,
+  team: {
+    icon: {
+      image_34: String,
+      image_44: String,
+      image_68: String,
+      image_88: String,
+      image_10: String,
+      image_13: String,
+      image_23: String,
+    },
   },
   settings: {
     domain: String,
@@ -26,5 +31,17 @@ const Account = mongoose.model('Account', {
     headerColor: String,
   },
 });
+
+accountSchema.statics.createOrUpdate = function createOrUpdate(accountInfo) {
+
+  addCustomer();
+
+  return this.update({
+    team_id: accountInfo.team_id },
+    accountInfo,
+    { upsert: true, overwrite: true });
+};
+
+const Account = mongoose.model('Account', accountSchema);
 
 module.exports = Account;

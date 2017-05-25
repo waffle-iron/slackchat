@@ -1,5 +1,5 @@
 const crypto = require('crypto');
-const redis = require("redis");
+const redis = require('redis');
 const MESSAGE_TYPES = require('./messageTypes');
 const Conversation = require('../models/Conversation');
 
@@ -13,8 +13,8 @@ class ChindowBroker {
     this.sub = redis.createClient();
     this.pub = redis.createClient();
     this.sockets = {};
-    this.sub.on("message", this.onChannelMessage.bind(this));
-    this.sub.subscribe("from:slack");
+    this.sub.on('message', this.onChannelMessage.bind(this));
+    this.sub.subscribe('from:slack');
 
     this.io = io;
     this.io.on('connection', (socket) => {
@@ -65,7 +65,7 @@ class ChindowBroker {
     if (message.data && message.data.visitorId) {
       let socket = this.sockets[message.data.visitorId];
       if (socket) {
-        socket.emit(BROKER.MESSAGE, { author: "them", body: message.data.text });
+        socket.emit(BROKER.MESSAGE, { author: 'them', body: message.data.text });
       }
     }
   }

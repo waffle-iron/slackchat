@@ -32,6 +32,7 @@
     "react-dom": "15.5.4",
     "redis": "2.7.1",
     "socket.io": "2.0.1",
+    "stripe": "4.19.1",
     "style-loader": "0.17.0",
     "styled-components": "1.4.6",
     "styled-jsx": "0.5.7",
