@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const { addCustomer } = require('./../services/payments');
 
+mongoose.Promise = global.Promise;
 const Schema = mongoose.Schema;
 
 const accountSchema = new Schema({
@@ -33,8 +34,8 @@ const accountSchema = new Schema({
 });
 
 accountSchema.statics.createOrUpdate = function createOrUpdate(accountInfo) {
-
-  addCustomer();
+  console.log(accountInfo);
+  // addCustomer(accountInfo.email);
 
   return this.update({
     team_id: accountInfo.team_id },

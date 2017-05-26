@@ -40,6 +40,7 @@ class ChindowBroker {
     socket.emit(BROKER.VISITOR_ID, { visitorId });
 
     const message = { type: 'new_visitor', visitorId, teamId };
+    console.log('emitting new visior')
     this.pub.publish('from:chindow', JSON.stringify(message));
     this.sockets[visitorId] = socket;
   }

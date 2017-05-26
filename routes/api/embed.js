@@ -18,7 +18,6 @@ router.get('/:team_id/', (req, res) => {
         teamName: '${account.team_name}',
         imageUrl: '${account.team.icon.image_34}'
       }; ${rawBundle}`);
-      console.log('okokoko')
     } else {
       res.sendStatus(404);
     }
