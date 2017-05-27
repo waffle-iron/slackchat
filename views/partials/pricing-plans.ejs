@@ -25,8 +25,38 @@
     </div>
     <img src="/assets/pro-points.svg" alt="" class="sc-landing-pricing--plan-points">
     <div class="sc-landing-pricing--plan-button-wrapper">
-      <a class="sc-landing-pricing--plan-button" href='<%= href %>'>Get Slackchat Pro</a>
+      <a class="sc-landing-pricing--plan-button" id="customButton">Get Slackchat Pro</a>
     </div>
   </div>
 
 </div>
+
+<script src="https://checkout.stripe.com/checkout.js"></script>
+
+<script>
+var handler = StripeCheckout.configure({
+  key: 'pk_test_aMVrnnidiSdu5x76VgtKRaff',
+  image: 'https://stripe.com/img/documentation/checkout/marketplace.png',
+  locale: 'auto',
+  token: function(token) {
+    // You can access the token ID with `token.id`.
+    // Get the token ID to your server-side code for use.
+  }
+});
+
+document.getElementById('customButton').addEventListener('click', function(e) {
+  // Open Checkout with further options:
+  handler.open({
+    name: 'Demo Site',
+    description: '2 widgets',
+    currency: 'cad',
+    amount: 700
+  });
+  e.preventDefault();
+});
+
+// Close Checkout on page navigation:
+window.addEventListener('popstate', function() {
+  handler.close();
+});
+</script>
