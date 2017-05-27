@@ -6,7 +6,7 @@
     <div class="sc-landing--nav">
         <div class="sc-landing--nav-item">About</div>
         <div class="sc-landing--nav-item">Contact</div>
-        <% var href=`https://slack.com/oauth/authorize?redirect_uri=${process.env.SLACK_REDIRECT_URI}&scope=incoming-webhook,commands,bot&client_id=94105311894.149174096865`; %>
+        <% var href=`https://slack.com/oauth/authorize?redirect_uri=${process.env.SLACK_REDIRECT_URI}&scope=${process.env.SLACK_SCOPES}&client_id=${process.env.SLACK_CLIENT_ID}`; %>
         <a class="sc-landing--nav-item login" href='<%= href %>'>
             <img src="assets/slacklogo.svg" alt="">
             Login

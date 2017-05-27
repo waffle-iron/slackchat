@@ -19,8 +19,18 @@ module.exports = {
           if (response.data.ok === true) {
             const accountInfo = response.data;
             const token = response.data.access_token;
-            return axios.post(`${SLACK_API_URL}/team.info`, querystring.stringify({ token }))
+
+            const userProfileReq = axios.post(`${SLACK_API_URL}/users.profile.get`, querystring.stringify({ token }))
+              .then(({ data }) => data);
+
+            const teamInfoReq = axios.post(`${SLACK_API_URL}/team.info`, querystring.stringify({ token }))
               .then(({ data }) => Object.assign(accountInfo, data));
+
+            return Promise.all([userProfileReq, teamInfoReq]).then((responses) => {
+              responses.push(accountInfo);
+              const merged = Object.assign(...responses);
+              return merged;
+            });
           }
         });
   },

@@ -31,16 +31,23 @@ const accountSchema = new Schema({
     email: String,
     headerColor: String,
   },
+  paymentInfo: {
+    stripeCustomerId: String,
+  },
 });
 
 accountSchema.statics.createOrUpdate = function createOrUpdate(accountInfo) {
-  console.log(accountInfo);
-  // addCustomer(accountInfo.email);
+  const { email } = accountInfo.profile;
+  return this.findOne({ team_id: accountInfo.team_id }).then((account) => {
+    if (account) { return account; }
 
-  return this.update({
-    team_id: accountInfo.team_id },
-    accountInfo,
-    { upsert: true, overwrite: true });
+    return addCustomer({ email }).then((paymentInfo) => {
+      return this.update(
+        { team_id: accountInfo.team_id },
+        Object.assign({}, accountInfo, { paymentInfo }),
+        { upsert: true, overwrite: true });
+    });
+  });
 };
 
 const Account = mongoose.model('Account', accountSchema);

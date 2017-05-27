@@ -25,6 +25,10 @@ router.get('/', (req, res) => {
             res.redirect(`/${accountInfo.team_id}/dashboard/analytics`);
           });
         });
+      })
+      .catch((err) => {
+        console.log(err);
+        res.send(JSON.stringify(err));
       });
   } else {
     res.render('index.ejs');

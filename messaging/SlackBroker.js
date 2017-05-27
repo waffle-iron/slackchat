@@ -44,8 +44,10 @@ class SlackBroker {
   onSlackMessage(data) {
     const message = JSON.parse(data);
     const { type, subtype } = message;
-    console.log(`type:     ${message.type}`);
-    console.log(`subtype:  ${message.subtype}`);
+    console.log(`
+      type:     ${message.type}
+      subtype:  ${message.subtype}
+      ----------------------------------------`);
     if (type === 'message') {
       if (!subtype) {
         this.forwardMessageToChindow(message);

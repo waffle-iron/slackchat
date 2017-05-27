@@ -1,25 +1,36 @@
 const stripe = require('stripe')('sk_test_pVGkF03rLEY4ZYketkrKUDoR');
 
 
-module.exports = {
 
-  addCustomer(email) {
-    stripe.customers.create({
-      email,
-    }, (err, customer) => {
-      console.log(err);
-      console.log(customer);
-    });
-  },
-
-  addSubscription() {
+function _addSubscription(customerId) {
+  return new Promise((resolve, reject) => {
     stripe.subscriptions.create({
-      customer: 'cus_Ahof2RQXSTYslj',
+      customer: customerId,
       plan: 'sc-free-plan',
     }, (err, subscription) => {
-      console.log(err);
-      console.log(subscription);
+      if (err) { return reject(err); }
+      resolve(subscription);
     });
-  },
+  });
+}
 
-};
+function addCustomer({ email }) {
+  return new Promise((resolve, reject) => {
+    stripe.customers.create({
+      email,
+    }, (createCustomerErr, customer) => {
+      if (createCustomerErr) { return reject(createCustomerErr); }
+      _addSubscription(customer.id).then((subscription) => {
+        console.log(subscription);
+        return resolve({
+          stripeCustomerId: customer.id,
+        });
+      })
+      .catch((addSubscriptionErr) => {
+        reject(addSubscriptionErr);
+      });
+    });
+  });
+}
+
+module.exports = { addCustomer };

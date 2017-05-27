@@ -14,5 +14,6 @@ module.exports = {
         "class-methods-use-this": [0],
         "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
         "react/react-in-jsx-scope": "off",
+        "arrow-body-style": [0]
     }
 };
