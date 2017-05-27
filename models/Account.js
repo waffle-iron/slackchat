@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
+const { addCustomer } = require('./../services/payments');
 
-const Account = mongoose.model('Account', {
+mongoose.Promise = global.Promise;
+const Schema = mongoose.Schema;
+
+const accountSchema = new Schema({
   access_token: String,
   scope: String,
   user_id: String,
@@ -10,14 +14,16 @@ const Account = mongoose.model('Account', {
     bot_user_id: String,
     bot_access_token: String,
   },
-  icon: {
-    image_34: String,
-    image_44: String,
-    image_68: String,
-    image_88: String,
-    image_10: String,
-    image_13: String,
-    image_23: String,
+  team: {
+    icon: {
+      image_34: String,
+      image_44: String,
+      image_68: String,
+      image_88: String,
+      image_10: String,
+      image_13: String,
+      image_23: String,
+    },
   },
   settings: {
     domain: String,
@@ -25,6 +31,25 @@ const Account = mongoose.model('Account', {
     email: String,
     headerColor: String,
   },
+  paymentInfo: {
+    stripeCustomerId: String,
+  },
 });
+
+accountSchema.statics.createOrUpdate = function createOrUpdate(accountInfo) {
+  const { email } = accountInfo.profile;
+  return this.findOne({ team_id: accountInfo.team_id }).then((account) => {
+    if (account) { return account; }
+
+    return addCustomer({ email }).then((paymentInfo) => {
+      return this.update(
+        { team_id: accountInfo.team_id },
+        Object.assign({}, accountInfo, { paymentInfo }),
+        { upsert: true, overwrite: true });
+    });
+  });
+};
+
+const Account = mongoose.model('Account', accountSchema);
 
 module.exports = Account;

@@ -1,4 +1,4 @@
-const redis = require("redis");
+const redis = require('redis');
 const axios = require('axios');
 const querystring = require('querystring');
 const CLIENT_EVENTS = require('@slack/client').CLIENT_EVENTS;
@@ -29,47 +29,61 @@ class SlackBroker {
     this.rtm.start();
   }
 
-  getWssUrl({ botToken }) {
-    return axios.post(`${SLACK_API_URL}/rtm.start`,
-        querystring
-          .stringify({ botToken }))
-          .then(res => res.data)
-          .catch(err => console.log(err));
-  }
-
   onStartErr(err) {
     console.log(err);
   }
 
   onClientAuthenticated(rtmStartData) {
+    this.teamId = rtmStartData.users[0].team_id;
     rtmStartData.channels.forEach((channel) => {
       this.channelMap[channel.name] = channel.id;
     });
     console.log(`Logged in as ${rtmStartData.self.name} of team ${rtmStartData.team.name}, but not yet connected to a channel`);
   }
 
-  onSlackMessage(message) {
-    message = JSON.parse(message);
-    if (message.text && message.channel && !message.bot_id) {
-      Conversation.findOne({ channelId: message.channel }).exec().then((result) => {
-        message.visitorId = result.visitorId;
-        message = { type: 'text', data: message };
-        this.pub.publish('from:slack', JSON.stringify(message));
-      })
+  onSlackMessage(data) {
+    const message = JSON.parse(data);
+    const { type, subtype } = message;
+    console.log(`
+      type:     ${message.type}
+      subtype:  ${message.subtype}
+      ----------------------------------------`);
+    if (type === 'message') {
+      if (!subtype) {
+        this.forwardMessageToChindow(message);
+      }
     }
   }
 
   onChannelMessage(redisChannel, channelMessage) {
     const message = JSON.parse(channelMessage);
     if (message.type === 'text') {
-      this.handleTextMessage(message);
-    } else if (message.type === 'new_visitor') {
+      this.forwardMessageToSlack(message);
+    } else if (message.type === 'new_visitor' && message.teamId === this.teamId) {
       const channelName = Moniker.choose();
-      this.createChannel(channelName, message.visitorId, message.teamId)
+      this.createChannel(channelName, message.visitorId, message.teamId);
     }
   }
 
-  handleTextMessage(message) {
+  forwardMessageToChindow(message) {
+    Conversation.findOne({ channelId: message.channel }).exec().then((result) => {
+      if (result) {
+        const channelMessage = {
+          type: 'text',
+          data: message,
+          visitorId: message.visitorId,
+        };
+        this.pub.publish('from:slack', JSON.stringify(channelMessage));
+      } else {
+        console.log(message);
+        console.log('Converation not found');
+      }
+    }).catch(err => {
+      console.log(err);
+    });
+  }
+
+  forwardMessageToSlack(message) {
     const slackChannelId = message.data.channelId;
     if (slackChannelId) {
       const { teamId } = message.data;
@@ -93,35 +107,38 @@ class SlackBroker {
     const params = {
       token,
       channel: channelId,
-      user: botId
+      user: botId,
     };
     return axios.post(`${SLACK_API_URL}/channels.invite`, querystring.stringify(params))
-      .then(response => {
+      .then((response) => {
         if (response.status === 200) {
           return channelId;
         }
       });
   }
 
-  createChannel(name, visitorId, team_id) {
-    return Account.findOne({team_id}).exec().then(account => {
+  createChannel(name, visitorId, teamId) {
+    return Account.findOne({ team_id: teamId }).exec().then((account) => {
       if (!account) { return false; }
 
       const token = account.access_token;
       const botId = account.bot.bot_user_id;
 
-      return axios.post(`${SLACK_API_URL}/channels.create`, querystring.stringify({token, name}))
-          .then(response => {
+      return axios.post(`${SLACK_API_URL}/channels.create`, querystring.stringify({ token, name }))
+          .then((response) => {
             if (response.status === 200) {
               const channelId = response.data.channel.id;
-              return this.addToChannel({token, channelId, botId})
+              return this.addToChannel({ token, channelId, botId });
             }
           })
-          .then(channelId => {
-            return new Conversation({ 
-                  visitorId, 
-                  channelId 
-                }).save(); 
+          .then((channelId) => {
+            return new Conversation({
+              visitorId,
+              channelId,
+              teamId,
+            }).save();
+          }).catch(err => {
+            console.log(`ERR: ${err}`);
           });
     });
   }

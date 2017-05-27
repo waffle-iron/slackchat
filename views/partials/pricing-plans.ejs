@@ -1,3 +1,5 @@
+<% var href=`https://slack.com/oauth/authorize?redirect_uri=${process.env.SLACK_REDIRECT_URI}&scope=${process.env.SLACK_SCOPES}&client_id=${process.env.SLACK_CLIENT_ID}`; %>
+
 <div class="sc-landing-pricing--plans">
   <div class="sc-landing-pricing--plan">
     <div class="sc-landing-pricing--plan-header">
@@ -9,7 +11,7 @@
     </div>
     <img src="/assets/free-points.svg" alt="" class="sc-landing-pricing--plan-points">
     <div class="sc-landing-pricing--plan-button-wrapper">
-      <div class="sc-landing-pricing--plan-button">Get Slackchat Free</div>
+      <a class="sc-landing-pricing--plan-button" href='<%= href %>'>Get Slackchat Free</a>
     </div>
   </div>
 
@@ -23,8 +25,38 @@
     </div>
     <img src="/assets/pro-points.svg" alt="" class="sc-landing-pricing--plan-points">
     <div class="sc-landing-pricing--plan-button-wrapper">
-      <div class="sc-landing-pricing--plan-button">Get Slackchat Pro</div>
+      <a class="sc-landing-pricing--plan-button" id="customButton">Get Slackchat Pro</a>
     </div>
   </div>
 
 </div>
+
+<script src="https://checkout.stripe.com/checkout.js"></script>
+
+<script>
+var handler = StripeCheckout.configure({
+  key: 'pk_test_aMVrnnidiSdu5x76VgtKRaff',
+  image: 'https://stripe.com/img/documentation/checkout/marketplace.png',
+  locale: 'auto',
+  token: function(token) {
+    // You can access the token ID with `token.id`.
+    // Get the token ID to your server-side code for use.
+  }
+});
+
+document.getElementById('customButton').addEventListener('click', function(e) {
+  // Open Checkout with further options:
+  handler.open({
+    name: 'Demo Site',
+    description: '2 widgets',
+    currency: 'cad',
+    amount: 700
+  });
+  e.preventDefault();
+});
+
+// Close Checkout on page navigation:
+window.addEventListener('popstate', function() {
+  handler.close();
+});
+</script>

@@ -16,11 +16,13 @@ router.get('/:team_id/', (req, res) => {
       res.send(`window.SlackChat = {
         teamId: '${team_id}',
         teamName: '${account.team_name}',
-        imageUrl: '${account.icon.image_34}'
+        imageUrl: '${account.team.icon.image_34}'
       }; ${rawBundle}`);
     } else {
       res.sendStatus(404);
     }
+  }).catch(err => {
+    console.log(err);
   });
 
 });

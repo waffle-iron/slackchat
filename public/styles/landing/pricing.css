@@ -85,6 +85,7 @@
   background: linear-gradient( 180deg, #2CCEFF, #4E8CFF);
   box-shadow: 0px 1px 10px rgba(28, 35, 118, 0.24);
   cursor: pointer;
+  text-decoration: none;
 }
 
 .sc-landing-pricing--plan-button:hover {
