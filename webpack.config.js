@@ -1,3 +1,5 @@
+require('dotenv').config();
+const webpack = require('webpack');
 const path = require('path');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
@@ -41,6 +43,11 @@ module.exports = {
   plugins: [
     new UglifyJSPlugin({
       sourceMap: true,
+    }),
+    new webpack.DefinePlugin({
+      'process.env': {
+        SC_SOCKET_URL: JSON.stringify(process.env.SC_SOCKET_URL),
+      },
     }),
     new ExtractTextPlugin('styles.bundle.css'),
     new OptimizeCssAssetsPlugin({

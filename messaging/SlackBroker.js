@@ -44,10 +44,12 @@ class SlackBroker {
   onSlackMessage(data) {
     const message = JSON.parse(data);
     const { type, subtype } = message;
-    console.log(`
-      type:     ${message.type}
-      subtype:  ${message.subtype}
-      ----------------------------------------`);
+    if (type !== 'pong') {
+      console.log(`
+        type:     ${message.type}
+        subtype:  ${message.subtype}
+        ----------------------------------------`);
+    }
     if (type === 'message') {
       if (!subtype) {
         this.forwardMessageToChindow(message);
@@ -66,13 +68,15 @@ class SlackBroker {
   }
 
   forwardMessageToChindow(message) {
-    Conversation.findOne({ channelId: message.channel }).exec().then((result) => {
-      if (result) {
+    Conversation.findOne({ channelId: message.channel }).exec().then((conversation) => {
+      if (conversation) {
         const channelMessage = {
           type: 'text',
-          data: message,
-          visitorId: message.visitorId,
+          data: Object.assign({}, message, {
+            visitorId: conversation.visitorId,
+          }),
         };
+        console.log(channelMessage);
         this.pub.publish('from:slack', JSON.stringify(channelMessage));
       } else {
         console.log(message);
