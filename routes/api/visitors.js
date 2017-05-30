@@ -11,6 +11,8 @@ function padVisitorData(visitors) {
   let lastDate = moment().format('YYYY-MM-DD');
   if (visitors[0]) {
     lastDate = visitors[0].x;
+  } else {
+    visitors.push({ x: lastDate, y: 0 });
   }
   for (let i = visitors.length; i < 7; i += 1) {
     lastDate = moment(lastDate).subtract(1, 'days').format('YYYY-MM-DD');

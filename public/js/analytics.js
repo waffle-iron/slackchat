@@ -33,7 +33,6 @@ function setTabInfo(data) {
 function initChart() {
   analyticsChart = createChart([]);
   const chartDataUrl = chart.getAttribute('sc-chart-data-src');
-  // const chatsCounter = document.querySelector('#sc-chats-counter');
 
   const tabs = document.querySelectorAll('.sc-analytics--chart-header .sc-analytics--chart-section');
   [].forEach.call(tabs, (tab) => {
