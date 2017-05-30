@@ -1,17 +1,20 @@
 <div class="sc-analytics">
   <div class="sc-analytics--chart-header">
-    <div class="sc-analytics--chart-section active">
-      <div class="sc-analytics--chart-section-numbers">150<span>/200</span></div>
+    <a class="sc-analytics--chart-section active" data-name="allChats">
+      <div class="sc-analytics--chart-section-numbers">
+        <span id="sc-all-chats-counter">&#8203;</span>
+        <span>/25</span>
+      </div>
       <div class="sc-analytics--chart-section-title">ALL CHATS</div>
-    </div>
-    <div class="sc-analytics--chart-section">
-      <div class="sc-analytics--chart-section-numbers">89</div>
-      <div class="sc-analytics--chart-section-title">NEW VISITOR CHATS</div>
-    </div>
-    <div class="sc-analytics--chart-section">
-      <div class="sc-analytics--chart-section-numbers">564</div>
+    </a>
+    <a class="sc-analytics--chart-section" data-name="missedChats">
+      <div class="sc-analytics--chart-section-numbers" id="sc-missed-chats-counter">&#8203;</div>
+      <div class="sc-analytics--chart-section-title">MISSED CHATS</div>
+    </a>
+    <a class="sc-analytics--chart-section" data-name="allVisitors">
+      <div class="sc-analytics--chart-section-numbers" id="sc-all-visitors-counter">&#8203;</div>
       <div class="sc-analytics--chart-section-title">TOTAL VISITORS</div>
-    </div>
+    </a>
     <div class="sc-analytics--chart-etc">
       <div class="sc-analytics--chart-date">March 2017</div>
       <div class="sc-analytics--chart-switcher">
@@ -21,84 +24,16 @@
     </div>
   </div>
   <div class="sc-analytics--canvas-wrapper">
-    <canvas class="sc-analytics--canvas" id="canvas" width="500" height="200"></canvas>
+    <canvas 
+      sc-chart-data-src="<%= chartDataUrl %>"
+      class="sc-analytics--canvas" 
+      id="canvas" 
+      width="500" 
+      height="200"></canvas>
   </div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
   <script>
-    var ctx = document.getElementById("canvas").getContext("2d");
-    var scatterChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            datasets: [{
-                lineTension: 0,
-                backgroundColor: "rgba(1,1,1,0)",
-                borderColor: "#A2F4FF",
-                borderWidth: 5,
-                pointBackgroundColor: '#4E8CFF',
-                pointBorderWidth: 2,
-                pointBorderColor: "white",
-                pointRadius: 5,
-                data: [{
-                    x: moment().add(4, 'd').format(),
-                    y: 5
-                }, {
-                    x: moment().add(5, 'd').format(),
-                    y: 10
-                }, {
-                    x: moment().add(6, 'd').format(),
-                    y: 30
-                }, {
-                    x: moment().add(7, 'd').format(),
-                    y: 10
-                }, {
-                    x: moment().add(8, 'd').format(),
-                    y: 20
-                }, {
-                    x: moment().add(9, 'd').format(),
-                    y: 20
-                }]
-            }]
-        },
-        options: {
-          legend: {
-            display: false
-          },
-          scales: {
-            yAxes: [{
-              gridLines: {
-                drawBorder: false,
-                color: '#F0F4FA',
-                zeroLineColor: '#F0F4FA',
-                lineWidth: 2,
-                zeroLineWidth: 2
-              },
-              ticks: {
-                beginAtZero: true,
-                fixedStepSize: 10
-              }
-            }],
-            xAxes: [{
-              type: 'time',
-              time: {
-                tooltipFormat: "MMM DD",
-                displayFormats: {
-                    day: "MMM DD"
-                },
-                unit: 'day'
-              },
-              position: 'bottom',
-              gridLines: {
-                display: false
-              },
-              ticks: {
-                fixedStepSize: 10,
-                autoSkip: true,
-                maxTicksLimit: 3
-              }
-            }]
-          }
-        }
-    });
+
   </script>
 </div>

@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const Account = require('./../models/Account');
+const querystring = require('querystring');
 
 
 const router = express.Router();
@@ -16,9 +17,15 @@ const hasActiveSession = (req, res, next) => {
 
 router.get('/:team_id/dashboard/analytics', hasActiveSession, (req, res) => {
   const teamId = req.params.team_id;
+  const openTab = req.query.tab || 'all';
+  const queryParams = querystring.stringify({
+    chats: (openTab === 'all' || openTab === 'missed'),
+    missed: (openTab === 'missed'),
+  });
+  const chartDataUrl = `${process.env.SLACKCHAT_API_URL}/visitors/${teamId}?${queryParams}`;
   Account.findOne({ team_id: teamId }).then((account) => {
     if (!account) { return res.sendStatus(404); }
-    return res.render('dashboard/analytics', account);
+    return res.render('dashboard/analytics', Object.assign(account, { openTab, chartDataUrl }));
   });
 });
 

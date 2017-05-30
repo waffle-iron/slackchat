@@ -4,7 +4,7 @@ const querystring = require('querystring');
 const CLIENT_EVENTS = require('@slack/client').CLIENT_EVENTS;
 const RtmClient = require('@slack/client').RtmClient;
 const Moniker = require('moniker');
-const Conversation = require('../models/Conversation');
+const Visitor = require('../models/Visitor');
 const Account = require('../models/Account');
 
 
@@ -68,12 +68,12 @@ class SlackBroker {
   }
 
   forwardMessageToChindow(message) {
-    Conversation.findOne({ channelId: message.channel }).exec().then((conversation) => {
-      if (conversation) {
+    Visitor.findOne({ channelId: message.channel }).exec().then((visitor) => {
+      if (visitor) {
         const channelMessage = {
           type: 'text',
           data: Object.assign({}, message, {
-            visitorId: conversation.visitorId,
+            visitorId: visitor.visitorId,
           }),
         };
         console.log(channelMessage);
@@ -136,7 +136,7 @@ class SlackBroker {
             }
           })
           .then((channelId) => {
-            return new Conversation({
+            return new Visitor({
               visitorId,
               channelId,
               teamId,

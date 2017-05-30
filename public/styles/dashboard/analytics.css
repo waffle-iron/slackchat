@@ -21,6 +21,7 @@
   color: white;
   cursor: pointer;
   border-right: solid 1px #3365BF;
+  text-decoration: none;
 }
 
 .sc-analytics--chart-section.active, .sc-analytics--chart-section.active:hover {
@@ -52,12 +53,13 @@
 .sc-analytics--chart-section-numbers {
   font-weight: 600;
   margin-bottom: 5px;
+  display: flex;
+  justify-content: center
 }
 
 .sc-analytics--chart-section-numbers span {
   font-weight: 300;
   color: var(--yellow-2);
-  margin-left: 5px;
 }
 
 .sc-analytics--chart-section-title {

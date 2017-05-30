@@ -1,7 +1,7 @@
 const crypto = require('crypto');
 const redis = require('redis');
 const MESSAGE_TYPES = require('./messageTypes');
-const Conversation = require('../models/Conversation');
+const Visitor = require('../models/Visitor');
 
 
 const CLIENT = MESSAGE_TYPES.CLIENT;
@@ -46,7 +46,17 @@ class ChindowBroker {
 
   onChindowMessage(socket, message) {
     if (message.visitorId) {
-      Conversation.findOne({ visitorId: message.visitorId }).exec().then((result) => {
+      Visitor.findOne({ visitorId: message.visitorId }).exec().then((result) => {
+        Visitor.update(
+          { visitorId: message.visitorId },
+          {
+            $set: {
+              lastConversation: {
+                started: Date.now(),
+                missed: false,
+              },
+            },
+          }).exec();
         const { channelId } = result;
         const channelMessage = {
           type: 'text',
