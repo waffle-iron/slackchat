@@ -1,9 +1,9 @@
-const mongoose = require('mongoose')
-const MONGO_URL = "mongodb://dharness:bluecakes@ds137090.mlab.com:37090/chindow";
+const mongoose = require('mongoose');
 
 
 function connect() {
-  return mongoose.connect(MONGO_URL)
+  mongoose.set('debug', process.env.NODE_ENV !== 'prudction');
+  return mongoose.connect(process.env.MONGO_URL);
 }
 
 module.exports = { connect };

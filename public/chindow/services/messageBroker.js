@@ -4,6 +4,9 @@ const BROKER = MESSAGE_TYPES.BROKER;
 const SOCKET_URL = process.env.SC_SOCKET_URL;
 const io = require('socket.io-client');
 
+console.log(SOCKET_URL);
+
+
 const messageBroker = {
 
   init() {
