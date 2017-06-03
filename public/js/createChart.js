@@ -1,7 +1,9 @@
 import Chart from 'chart.js';
 
 
-export default (createChart) => {
+export default (chartData) => {
+  const maxY = Math.max(...chartData.map(point => point.y), 10);
+
   const canvas = document.getElementById('canvas');
   if (!canvas) { return false; }
   const ctx = canvas.getContext('2d');
@@ -17,7 +19,7 @@ export default (createChart) => {
         pointBorderWidth: 2,
         pointBorderColor: 'white',
         pointRadius: 5,
-        data: createChart,
+        data: chartData,
       }],
     },
     options: {
@@ -35,7 +37,8 @@ export default (createChart) => {
           },
           ticks: {
             beginAtZero: true,
-            fixedStepSize: 10,
+            fixedStepSize: 5,
+            max: maxY,
           },
         }],
         xAxes: [{
