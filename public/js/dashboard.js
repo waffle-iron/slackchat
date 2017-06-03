@@ -11,17 +11,6 @@ document.querySelectorAll('a[data-route]').forEach((el) => {
   });
 });
 
-// [
-//   document.querySelector('#sc-all-chats-tab'),
-//   document.querySelector('#sc-missed-chats-tab'),
-//   document.querySelector('#sc-visitors-tab'),
-// ].forEach((tab) => {
-//   if (tab) {
-//     tab.addEventListener('click', () => {
-//       tab.classList.toggle('active');
-//     });
-//   }
-// });
 
 const copyScriptButton = document.querySelector('#sc-copy-script-button');
 const copyScriptInput = document.querySelector('#sc-copy-script-input');

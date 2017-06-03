@@ -2,19 +2,27 @@
   <div class="sc-left-nav-items">
     <a class="sc-left-nav-item" href="/<%= team_id %>/dashboard/analytics">
       <img class="sc-left-nav-item--img" src="/assets/analytics.svg">
-      <div class="sc-left-nav-item--text">Analytics</div>
+      <div class="<%= 'sc-left-nav-item--text' + (selectedPage === 'analytics' ? ' selected' : '') %>">
+        Analytics
+      </div>
     </a>
     <a class="sc-left-nav-item" href="/<%= team_id %>/dashboard/widget">
       <img class="sc-left-nav-item--img" src="/assets/widget.svg">
-      <div class="sc-left-nav-item--text">Chindow</div>
+      <div class="<%= 'sc-left-nav-item--text' + (selectedPage === 'widget' ? ' selected' : '') %>">
+        Chindow
+      </div>
     </a>
     <a class="sc-left-nav-item" href="/<%= team_id %>/dashboard/settings">
       <img class="sc-left-nav-item--img" src="/assets/settings.svg">
-      <div class="sc-left-nav-item--text">Settings</div>
+      <div class="<%= 'sc-left-nav-item--text' + (selectedPage === 'settings' ? ' selected' : '') %>">
+        Settings
+      </div>
     </a>
     <a class="sc-left-nav-item" href="/<%= team_id %>/dashboard/payments">
       <img class="sc-left-nav-item--img" src="/assets/payments.svg">
-      <div class="sc-left-nav-item--text">Payments</div>
+      <div class="<%= 'sc-left-nav-item--text' + (selectedPage === 'payments' ? ' selected' : '') %>">
+        Payments
+      </div>
     </a>
     <div class="sc-horz-divider"></div>
     <a class="sc-left-nav-item" href="slack://open?team=<%= team_id %>">
