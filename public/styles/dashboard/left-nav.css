@@ -33,7 +33,7 @@
   color: var(--blue-1);
 }
 
-.sc-left-nav-item:hover .sc-left-nav-item--text {
+.sc-left-nav-item--text.selected, .sc-left-nav-item:hover .sc-left-nav-item--text {
   color: #2C8EFF;
 }
 
