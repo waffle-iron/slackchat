@@ -6,20 +6,23 @@ const Visitor = require('./../../models/Visitor');
 const router = express.Router();
 
 function padVisitorData(visitors) {
-  // Pad the visitors in case this is
-  // a new account
   let lastDate = moment().format('YYYY-MM-DD');
-  if (visitors[0]) {
-    lastDate = visitors[0].x;
-  } else {
-    visitors.push({ x: lastDate, y: 0 });
+  const paddedVisitorData = [];
+
+  let index = 0;
+  for (let i = 0; i < 7; i += 1) {
+    const prevDate = moment(lastDate).subtract(1, 'days').format('YYYY-MM-DD');
+    if (visitors[index] && lastDate === visitors[index].x) {
+      paddedVisitorData.push(visitors[index]);
+      index += 1;
+    } else {
+      paddedVisitorData.push({ x: lastDate, y: 0 });
+    }
+    lastDate = prevDate;
   }
-  for (let i = visitors.length; i < 7; i += 1) {
-    lastDate = moment(lastDate).subtract(1, 'days').format('YYYY-MM-DD');
-    visitors.push({ x: lastDate, y: 0 });
-  }
-  return visitors.reverse();
+  return paddedVisitorData;
 }
+
 
 router.get('/:teamId', (req, res) => {
   const { teamId } = req.params;
