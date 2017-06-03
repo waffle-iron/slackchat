@@ -4,7 +4,8 @@ const ChindowBroker = require('./ChindowBroker');
 
 module.exports = (io, botTokens) => {
   const chindowBroker = new ChindowBroker(io);
-  const slackBrokers = botTokens.map(botToken => {
+  const slackBrokers = botTokens.map((botToken) => {
     return new SlackBroker({ botToken });
   });
+  return { chindowBroker, slackBrokers };
 };

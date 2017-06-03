@@ -13,6 +13,7 @@ const Account = require('./models/Account');
 const session = require('express-session');
 const redis = require('redis');
 const RedisStore = require('connect-redis')(session);
+const winston = require('winston');
 
 
 app.use(session({
@@ -43,11 +44,11 @@ connectDb().then(() => {
   Account.find().distinct('bot.bot_access_token').exec().then((botTokens) => {
     initMessaging(io, botTokens);
     server.listen(PORT, () => {
-      console.log(`App listening at http://127.0.0.1:${PORT}`);
+      winston.info(`App listening at http://127.0.0.1:${PORT}`);
     });
   });
 }, (err) => {
   if (err) {
-    console.log('Database not connected');
+    winston.error('Database not connected');
   }
 });

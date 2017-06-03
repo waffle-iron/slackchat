@@ -4,8 +4,6 @@ const BROKER = MESSAGE_TYPES.BROKER;
 const SOCKET_URL = process.env.SC_SOCKET_URL;
 const io = require('socket.io-client');
 
-console.log(SOCKET_URL);
-
 
 const messageBroker = {
 
@@ -15,11 +13,12 @@ const messageBroker = {
     this.messageRecievedHandlers = [];
     socket.on(BROKER.VISITOR_ID, this.setVisitorId);
     socket.on(BROKER.MESSAGE, this.handleIncomingMessage.bind(this));
-    let visitorId = this.getVisitorId();
-    let teamId = this.getTeamId();
+    const visitorId = this.getVisitorId();
+    const teamId = this.getTeamId();
 
-    if (!visitorId) { socket.emit(CLIENT.NEW_VISITOR, {teamId}); }
-    else { socket.emit(CLIENT.RETURNING_VISITOR, { visitorId, teamId });}
+    if (!visitorId) {
+      socket.emit(CLIENT.NEW_VISITOR, { teamId });
+    } else { socket.emit(CLIENT.RETURNING_VISITOR, { visitorId, teamId }); }
   },
 
   sendMessage(msg) {
