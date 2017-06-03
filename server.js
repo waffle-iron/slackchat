@@ -22,7 +22,7 @@ app.use(session({
   secret: 'keyboard cat',
   resave: true,
   saveUninitialized: true,
-  genid(req) {
+  genid() {
     return crypto.randomBytes(48).toString('base64');
   },
 }));
