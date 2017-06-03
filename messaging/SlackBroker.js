@@ -6,6 +6,7 @@ const RtmClient = require('@slack/client').RtmClient;
 const Moniker = require('moniker');
 const Visitor = require('../models/Visitor');
 const Account = require('../models/Account');
+const winston = require('winston');
 
 
 const SLACK_API_URL = 'https://slack.com/api';
@@ -30,7 +31,7 @@ class SlackBroker {
   }
 
   onStartErr(err) {
-    console.log(err);
+    winston.warn(err);
   }
 
   onClientAuthenticated(rtmStartData) {
@@ -38,14 +39,14 @@ class SlackBroker {
     rtmStartData.channels.forEach((channel) => {
       this.channelMap[channel.name] = channel.id;
     });
-    console.log(`Logged in as ${rtmStartData.self.name} of team ${rtmStartData.team.name}, but not yet connected to a channel`);
+    winston.info(`Logged in as ${rtmStartData.self.name} of team ${rtmStartData.team.name}, but not yet connected to a channel`);
   }
 
   onSlackMessage(data) {
     const message = JSON.parse(data);
     const { type, subtype } = message;
     if (type !== 'pong') {
-      console.log(`
+      winston.info(`
         type:     ${message.type}
         subtype:  ${message.subtype}
         ----------------------------------------`);
@@ -76,14 +77,13 @@ class SlackBroker {
             visitorId: visitor.visitorId,
           }),
         };
-        console.log(channelMessage);
+        winston.info(channelMessage);
         this.pub.publish('from:slack', JSON.stringify(channelMessage));
       } else {
-        console.log(message);
-        console.log('Converation not found');
+        winston.info(message, 'Converation not found');
       }
-    }).catch(err => {
-      console.log(err);
+    }).catch((err) => {
+      winston.error(err);
     });
   }
 
@@ -95,7 +95,6 @@ class SlackBroker {
         team_id: teamId,
         'bot.bot_access_token': this.botToken,
       }).exec().then((account) => {
-
         return axios.post(`${SLACK_API_URL}/chat.postMessage`,
             querystring.stringify({
               token: account.access_token,
@@ -115,9 +114,10 @@ class SlackBroker {
     };
     return axios.post(`${SLACK_API_URL}/channels.invite`, querystring.stringify(params))
       .then((response) => {
-        if (response.status === 200) {
-          return channelId;
+        if (response.status !== 200) {
+          winston.warn('Error inviting to channel');
         }
+        return channelId;
       });
   }
 
@@ -130,10 +130,11 @@ class SlackBroker {
 
       return axios.post(`${SLACK_API_URL}/channels.create`, querystring.stringify({ token, name }))
           .then((response) => {
-            if (response.status === 200) {
-              const channelId = response.data.channel.id;
-              return this.addToChannel({ token, channelId, botId });
+            if (response.status !== 200) {
+              winston.error('Failed to create channel');
             }
+            const channelId = response.data.channel.id;
+            return this.addToChannel({ token, channelId, botId });
           })
           .then((channelId) => {
             return new Visitor({
@@ -141,8 +142,8 @@ class SlackBroker {
               channelId,
               teamId,
             }).save();
-          }).catch(err => {
-            console.log(`ERR: ${err}`);
+          }).catch((err) => {
+            winston.error('Error creating channel', err);
           });
     });
   }

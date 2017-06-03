@@ -4,6 +4,7 @@ const slackAuth = require('./../services/slackAuth');
 const dasboardController = require('./dashboard');
 const apiController = require('./api');
 const authController = require('./auth');
+const winston = require('winston');
 
 
 const router = express.Router();
@@ -27,7 +28,7 @@ router.get('/', (req, res) => {
         });
       })
       .catch((err) => {
-        console.log(err);
+        winston.error(err);
         res.send(JSON.stringify(err));
       });
   } else {

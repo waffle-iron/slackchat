@@ -1,15 +1,15 @@
 const stripe = require('stripe')('sk_test_pVGkF03rLEY4ZYketkrKUDoR');
+const winston = require('winston');
 
 
-
-function _addSubscription(customerId) {
+function addSubscription(customerId) {
   return new Promise((resolve, reject) => {
     stripe.subscriptions.create({
       customer: customerId,
       plan: 'sc-free-plan',
     }, (err, subscription) => {
       if (err) { return reject(err); }
-      resolve(subscription);
+      return resolve(subscription);
     });
   });
 }
@@ -20,14 +20,14 @@ function addCustomer({ email }) {
       email,
     }, (createCustomerErr, customer) => {
       if (createCustomerErr) { return reject(createCustomerErr); }
-      _addSubscription(customer.id).then((subscription) => {
-        console.log(subscription);
+      return addSubscription(customer.id).then((subscription) => {
+        winston.error(subscription);
         return resolve({
           stripeCustomerId: customer.id,
         });
       })
       .catch((addSubscriptionErr) => {
-        reject(addSubscriptionErr);
+        return reject(addSubscriptionErr);
       });
     });
   });

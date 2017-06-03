@@ -2,6 +2,7 @@ const express = require('express');
 const Account = require('./../../models/Account');
 const path = require('path');
 const fs = require('fs');
+const winston = require('winston');
 
 
 const router = express.Router();
@@ -21,7 +22,7 @@ router.get('/:team_id/', (req, res) => {
       res.sendStatus(404);
     }
   }).catch((err) => {
-    console.log(err);
+    winston.error(err);
   });
 });
 

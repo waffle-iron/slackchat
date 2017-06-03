@@ -70,10 +70,10 @@ class ChindowBroker {
     }
   }
 
-  onChannelMessage(redisChannel, message) {
-    message = JSON.parse(message);
+  onChannelMessage(redisChannel, messageData) {
+    const message = JSON.parse(messageData);
     if (message.data && message.data.visitorId) {
-      let socket = this.sockets[message.data.visitorId];
+      const socket = this.sockets[message.data.visitorId];
       if (socket) {
         socket.emit(BROKER.MESSAGE, { author: 'them', body: message.data.text });
       }
