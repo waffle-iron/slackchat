@@ -1,4 +1,4 @@
-import { h, render, Component } from 'preact';
+import React, { Component } from 'react';
 
 
 class Message extends Component {
@@ -10,10 +10,10 @@ class Message extends Component {
       (props.message.author === "me" ? "sent" : "received")
     ];
     return (
-      <div class="sc-message">
-        <div class={contentClassList.join(" ")}>
-          <div class="sc-message--avatar"></div>
-          <div class="sc-message--body" >{props.message.body}</div>
+      <div className="sc-message">
+        <div className={contentClassList.join(" ")}>
+          <div className="sc-message--avatar"></div>
+          <div className="sc-message--body" >{props.message.body}</div>
         </div>
       </div>)
   }

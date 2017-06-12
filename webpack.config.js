@@ -7,7 +7,7 @@ const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 
 module.exports = {
-  devtool: 'source-map',
+  devtool: 'eval',
   entry: {
     chindow: './public/chindow',
     dashboard: './public/js/dashboard',
@@ -22,7 +22,7 @@ module.exports = {
         test: /\.js?$/,
         loader: 'babel-loader',
         options: {
-          presets: ['es2015', 'preact'],
+          presets: ['es2015', 'react', 'stage-2'],
         },
       }, {
         test: /\.css?$/,

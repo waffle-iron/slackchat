@@ -1,4 +1,4 @@
-import { h, render, Component } from 'preact';
+import React, { Component } from 'react';
 import ChatWindow from './ChatWindow';
 
 
@@ -20,7 +20,7 @@ class Launcher extends Component {
     ];
     return (
       <div>
-        <div className={classList.join(' ')} onClick={this.handleClick.bind(this)} ></div>
+        <div className={classList.join(' ')} onClick={this.handleClick.bind(this)} />
         <ChatWindow active={this.state.active} onClose={this.handleClick.bind(this)} />
       </div>
     );

@@ -100,6 +100,15 @@
   fill: rgba(86, 88, 103, 1);
 }
 
+.sc-input-field--emoji-icon-wrapper {
+  background: none;
+  border: none;
+}
+
+.sc-input-field--emoji-icon-wrapper:focus {
+  outline: none;
+}
+
 .sc-input-field--emoji-icon {
   height: 25px;
   cursor: pointer;
@@ -110,6 +119,10 @@
   fill: rgba(86, 88, 103, 0.3);
 }
 
+.sc-input-field--emoji-icon-wrapper:focus .sc-input-field--emoji-icon path,
+.sc-input-field--emoji-icon-wrapper:focus .sc-input-field--emoji-icon circle,
+.sc-input-field--emoji-icon.active path,
+.sc-input-field--emoji-icon.active circle,
 .sc-input-field--emoji-icon:hover path,
 .sc-input-field--emoji-icon:hover circle {
   fill: rgba(86, 88, 103, 1);
