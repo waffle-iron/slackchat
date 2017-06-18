@@ -1,4 +1,4 @@
-import { h, render, Component } from 'preact';
+import React, { Component } from 'react';
 import MessageList from './MessageList'
 import UserInput from './UserInput'
 import Header from './Header'
@@ -30,7 +30,7 @@ class ChatWindow extends Component {
           (this.props.active ? " active" : " inactive")
         ];
         return (
-          <div class={classList.join(' ')}>
+          <div className={classList.join(' ')}>
             <Header teamName={messageBroker.getTeamName()} imageUrl={messageBroker.getImageUrl()} onClose={this.props.onClose} />
             <MessageList messages={this.state.messages}/>
             <UserInput onSubmit={this.onUserInputSubmit.bind(this)}/>
