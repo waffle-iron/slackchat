@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import SendIcon from './icons/SendIcon';
 import EmojiIcon from './icons/EmojiIcon';
-import EmojiPicker from './EmojiPicker';
+import EmojiPicker from './emoji-picker/EmojiPicker';
 
 
 class UserInput extends Component {
